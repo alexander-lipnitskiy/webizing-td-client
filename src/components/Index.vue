@@ -1,16 +1,15 @@
 <template>
     <div>
         <h1>Webizing Web Thing Model</h1>
-        <p>Version 1.0.0</p>
+        Version 1.0.0
 
         <h3>Things</h3>
 
         <p v-bind:key="key" v-for="(value, key) in things">
-            <a v-bind:href="'/td/' + key">{{value.name}}</a>
+            <el-link v-bind:href="`td/${key}`" type="primary">{{value.name}}</el-link>
             <br>
             {{value.description}}
         </p>
-
     </div>
 </template>
 
@@ -1888,8 +1887,8 @@
             }}
         ,
         computed: {
-            thingDescriptionURL: function () {
-                return ``
+            thingDescriptionURL: function (s) {
+                return 'td/'+ s
             }
         }
     }

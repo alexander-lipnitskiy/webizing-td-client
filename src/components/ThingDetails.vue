@@ -1,98 +1,168 @@
 <template>
-    <div>
-        <div v-if="!loading && model">
-            <h2><a v-bind:href="thingDescriptionURl">{{model.name}}</a></h2>
-            <p>Version of TD instance {{model.version.instance}}</p>
-            <h3>Description</h3>
-            <p>{{model.description}}</p>
-            <h3>Security</h3>
 
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th  scope="col">Type</th>
-                    <th scope="col">Security mechanism</th>
-                    <th scope="col">Description</th>
-                </tr>
-                </thead>
+            <div id="full_div">
+                <l-map
 
-                <tbody>
-                <tr v-bind:key="key" v-for="(value, key) in model.securityDefinitions">
-                    <td>{{key}}</td>
-                    <td>{{value.scheme}}</td>
-                    <td>{{value.description}}</td>
-                </tr>
-                </tbody>
-            </table>
-
-            <h3>Properties</h3>
-
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th scope="col">Property</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">ReadOnly</th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <tr v-bind:key="key" v-for="(value, key) in model.properties">
-                    <td>{{value.title}}</td>
-                    <td>{{value.type}}</td>
-                    <td>{{value.description}}</td>
-                    <td>{{value.readOnly}}</td>
-                </tr>
-
-                </tbody>
-            </table>
-
-            <h3>Forms</h3>
-
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>URL</th>
-                    <th scope="col">Content Type</th>
-                    <th scope="col">Operations</th>
-                    <th scope="col">Access</th>
-                </tr>
-                </thead>
-
-                <tbody>
-
-                <tr v-bind:key="key" v-for="(value, key) in model.forms">
-                    <td>{{value.href}}</td>
-                    <td>{{value.contentType}}</td>
-                    <td>{{value.op.join()}}</td>
-                    <td>{{value.secure}}</td>
-                </tr>
-
-                </tbody>
-            </table>
-        </div>
-        <div v-else class="text-center">
-            <div class="spinner-grow text-primary" role="status">
-                <span class="sr-only">Loading...</span>
+                        :zoom="zoom"
+                        :center="center"
+                        :options="mapOptions"
+                        style="height: 80%"
+                        @update:center="centerUpdate"
+                        @update:zoom="zoomUpdate"
+                >
+                    <l-tile-layer :url="url" :attribution="attribution" />
+                    <l-marker :lat-lng="withPopup">
+                        <l-popup>
+                            <div @click="innerClick">
+                                I am a popup
+                                <p v-show="showParagraph">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
+                                    Donec finibus semper metus id malesuada.
+                                </p>
+                            </div>
+                        </l-popup>
+                    </l-marker>
+                    <l-marker :lat-lng="withTooltip">
+                        <l-tooltip :options="{ permanent: true, interactive: true }">
+                            <div @click="innerClick">
+                                I am a tooltip
+                                <p v-show="showParagraph">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
+                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
+                                    Donec finibus semper metus id malesuada.
+                                </p>
+                            </div>
+                        </l-tooltip>
+                    </l-marker>
+                </l-map>
             </div>
-        </div>
 
-    </div>
+<!--        <div v-if="!loading && model">-->
+<!--            <h2><a v-bind:href="thingDescriptionURl">{{model.name}}</a></h2>-->
+<!--            <p>Version of TD instance {{model.version.instance}}</p>-->
+<!--            <h3>Description</h3>-->
+<!--            <p>{{model.description}}</p>-->
+
+<!--            <h3>Map</h3>-->
+
+
+
+<!--            <h3>Security</h3>-->
+
+<!--            <el-table-->
+<!--                    :data="getSecurityArray()"-->
+<!--                    border-->
+<!--                    style="width: 100%">-->
+<!--                <el-table-column-->
+<!--                        prop="type"-->
+<!--                        label="Type">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="scheme"-->
+<!--                        label="Security mechanism">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="description"-->
+<!--                        width="420"-->
+<!--                        label="Description">-->
+<!--                </el-table-column>-->
+<!--            </el-table>-->
+
+
+<!--            <h3>Properties</h3>-->
+
+<!--            <el-table-->
+<!--                    :data="getPropertiesArray()"-->
+<!--                    border-->
+<!--                    style="width: 100%">-->
+<!--                <el-table-column-->
+<!--                        prop="property"-->
+<!--                        label="Property">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="type"-->
+<!--                        label="Type">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="description"-->
+<!--                        width="720"-->
+<!--                        label="Description">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="readOnly"-->
+<!--                        label="ReadOnly">-->
+<!--                </el-table-column>-->
+<!--            </el-table>-->
+
+
+<!--            <h3>Forms</h3>-->
+
+<!--            <el-table-->
+<!--                    :data="model.forms"-->
+<!--                    border-->
+<!--                    style="width: 100%">-->
+<!--                <el-table-column-->
+<!--                        prop="href"-->
+<!--                        label="URL"-->
+<!--                        width="520">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="contentType"-->
+<!--                        label="Content Type">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="op"-->
+
+<!--                        label="Operation">-->
+<!--                </el-table-column>-->
+<!--                <el-table-column-->
+<!--                        prop="secure"-->
+<!--                        label="Access">-->
+<!--                </el-table-column>-->
+<!--            </el-table>-->
+<!--        </div>-->
+<!--        <div v-else class="text-center">-->
+<!--            loading-->
+<!--        </div>-->
+
 </template>
 
 <script>
+    import { latLng } from "leaflet";
+    import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+
+
     export default {
         name: 'AirQuality',
-        data () {
+        components: {
+            LMap,
+            LTileLayer,
+            LMarker,
+            LPopup,
+            LTooltip
+        },
+        data() {
             return {
                 loading: false,
                 model: null,
-                error: null
+                error: null,
+                zoom: 13,
+                center: latLng(47.41322, -1.219482),
+                url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
+                attribution:
+                    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+                withPopup: latLng(47.41322, -1.219482),
+                withTooltip: latLng(47.41422, -1.250482),
+                currentZoom: 11.5,
+                currentCenter: latLng(47.41322, -1.219482),
+                showParagraph: false,
+                mapOptions: {
+                    zoomSnap: 0.5
+                }
             }
         },
-        created () {
+        created() {
             this.fetchData()
         },
         computed: {
@@ -102,11 +172,23 @@
         },
 
         methods: {
-            async fetchData () {
+            zoomUpdate(zoom) {
+                this.currentZoom = zoom;
+            },
+            centerUpdate(center) {
+                this.currentCenter = center;
+            },
+            showLongText() {
+                this.showParagraph = !this.showParagraph;
+            },
+            innerClick() {
+                alert("Click!");
+            },
+            async fetchData() {
                 this.error = this.model = null;
                 this.loading = true;
 
-                const response = await fetch(`http://localhost:3000/td/${this.$route.params.thing}`,  {headers: {'Accept': 'application/json'}});
+                const response = await fetch(`http://localhost:3000/td/${this.$route.params.thing}`, {headers: {'Accept': 'application/json'}});
 
                 this.loading = false;
 
@@ -115,11 +197,71 @@
                 } else {
                     this.model = await response.json()
                 }
+            },
+            getPropertiesArray() {
+                let output = [];
+                const obj = this.model.properties;
+
+                for (const key of Object.keys(obj)) {
+                    output.push(
+                        {
+                            property: obj[key].title,
+                            type: obj[key].type,
+                            description: obj[key].description,
+                            readOnly: obj[key].readOnly.toString()
+                        }
+                    )
+                }
+
+                return output;
+            },
+            getSecurityArray() {
+                let output = [];
+                const obj = this.model.securityDefinitions;
+
+                for (const key of Object.keys(obj)) {
+                    // Type	Security mechanism	Description
+                    output.push(
+                        {
+                            type: key,
+                            scheme: obj[key].scheme,
+                            description: obj[key].description
+                        }
+                    )
+                }
+
+                return output;
+            },
+            getFormsArray() {
+                let output = [];
+                const obj = this.model.forms;
+
+                for (const key of Object.keys(obj)) {
+                    output.push(
+                        {
+                            property: key,
+                            type: obj[key].type,
+                            description: obj[key].description,
+                            readOnly: obj[key].readOnly.toString()
+                        }
+                    )
+                }
+
+                return output;
             }
         }
     }
 </script>
 
 <style scoped>
-
+    #full_div {
+        position: absolute;
+        overflow-x: auto;
+        top: 0;
+        right: 0;
+        left: 208px;
+        bottom: 0;
+        padding-left: 8px;
+        border-left: 1px solid #ccc;
+    }
 </style>
