@@ -1,177 +1,117 @@
 <template>
+        <div v-if="!loading && model">
+            <h2> <el-link style="font-size: 20px" v-bind:href="thingDescriptionURl" type="primary">{{model.name}}</el-link></h2>
+            <p>Version of TD instance {{model.version.instance}}</p>
+            <h3>Description</h3>
+            <p>{{model.description}}</p>
 
-            <div id="full_div">
-                <l-map
+            <h3>Location</h3>
+            <Simple></Simple>
 
-                        :zoom="zoom"
-                        :center="center"
-                        :options="mapOptions"
-                        style="height: 80%"
-                        @update:center="centerUpdate"
-                        @update:zoom="zoomUpdate"
-                >
-                    <l-tile-layer :url="url" :attribution="attribution" />
-                    <l-marker :lat-lng="withPopup">
-                        <l-popup>
-                            <div @click="innerClick">
-                                I am a popup
-                                <p v-show="showParagraph">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-                                    Donec finibus semper metus id malesuada.
-                                </p>
-                            </div>
-                        </l-popup>
-                    </l-marker>
-                    <l-marker :lat-lng="withTooltip">
-                        <l-tooltip :options="{ permanent: true, interactive: true }">
-                            <div @click="innerClick">
-                                I am a tooltip
-                                <p v-show="showParagraph">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-                                    sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-                                    Donec finibus semper metus id malesuada.
-                                </p>
-                            </div>
-                        </l-tooltip>
-                    </l-marker>
-                </l-map>
-            </div>
+            <h3>Security</h3>
 
-<!--        <div v-if="!loading && model">-->
-<!--            <h2><a v-bind:href="thingDescriptionURl">{{model.name}}</a></h2>-->
-<!--            <p>Version of TD instance {{model.version.instance}}</p>-->
-<!--            <h3>Description</h3>-->
-<!--            <p>{{model.description}}</p>-->
-
-<!--            <h3>Map</h3>-->
+            <el-table
+                    :data="getSecurityArray()"
+                    border
+                    style="width: 100%">
+                <el-table-column
+                        label="Type">
+                    <template slot-scope="scope">
+                        <span style="color:red">{{ scope.row.type }}</span>
+                    </template>
+                </el-table-column>
+                <el-table-column
+                        prop="scheme"
+                        label="Security mechanism">
+                </el-table-column>
+                <el-table-column
+                        prop="description"
+                        width="420"
+                        label="Description">
+                </el-table-column>
+            </el-table>
 
 
+            <h3>Properties</h3>
 
-<!--            <h3>Security</h3>-->
-
-<!--            <el-table-->
-<!--                    :data="getSecurityArray()"-->
-<!--                    border-->
-<!--                    style="width: 100%">-->
-<!--                <el-table-column-->
-<!--                        prop="type"-->
-<!--                        label="Type">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="scheme"-->
-<!--                        label="Security mechanism">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="description"-->
-<!--                        width="420"-->
-<!--                        label="Description">-->
-<!--                </el-table-column>-->
-<!--            </el-table>-->
-
-
-<!--            <h3>Properties</h3>-->
-
-<!--            <el-table-->
-<!--                    :data="getPropertiesArray()"-->
-<!--                    border-->
-<!--                    style="width: 100%">-->
-<!--                <el-table-column-->
-<!--                        prop="property"-->
-<!--                        label="Property">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="type"-->
-<!--                        label="Type">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="description"-->
-<!--                        width="720"-->
-<!--                        label="Description">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="readOnly"-->
-<!--                        label="ReadOnly">-->
-<!--                </el-table-column>-->
-<!--            </el-table>-->
+            <el-table
+                    :data="getPropertiesArray()"
+                    border
+                    style="width: 100%">
+                <el-table-column
+                        prop="property"
+                        label="Property">
+                </el-table-column>
+                <el-table-column
+                        prop="type"
+                        label="Type">
+                </el-table-column>
+                <el-table-column
+                        prop="description"
+                        width="720"
+                        label="Description">
+                </el-table-column>
+                <el-table-column
+                        prop="readOnly"
+                        label="ReadOnly">
+                </el-table-column>
+            </el-table>
 
 
-<!--            <h3>Forms</h3>-->
+            <h3>Forms</h3>
 
-<!--            <el-table-->
-<!--                    :data="model.forms"-->
-<!--                    border-->
-<!--                    style="width: 100%">-->
-<!--                <el-table-column-->
-<!--                        prop="href"-->
-<!--                        label="URL"-->
-<!--                        width="520">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="contentType"-->
-<!--                        label="Content Type">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="op"-->
-
-<!--                        label="Operation">-->
-<!--                </el-table-column>-->
-<!--                <el-table-column-->
-<!--                        prop="secure"-->
-<!--                        label="Access">-->
-<!--                </el-table-column>-->
-<!--            </el-table>-->
-<!--        </div>-->
-<!--        <div v-else class="text-center">-->
-<!--            loading-->
-<!--        </div>-->
+            <el-table
+                    :data="model.forms"
+                    border
+                    style="width: 100%">
+                <el-table-column
+                        prop="href"
+                        label="URL"
+                        width="520">
+                </el-table-column>
+                <el-table-column
+                        prop="contentType"
+                        label="Content Type">
+                </el-table-column>
+                <el-table-column
+                        prop="op"
+                        label="Operation">
+                </el-table-column>
+                <el-table-column
+                        prop="secure"
+                        label="Access">
+                </el-table-column>
+            </el-table>
+        </div>
+        <div v-else class="text-center">
+            loading
+        </div>
 
 </template>
 
 <script>
-    import { latLng } from "leaflet";
-    import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
-
+    import Simple from './Simple';
 
     export default {
         name: 'AirQuality',
         components: {
-            LMap,
-            LTileLayer,
-            LMarker,
-            LPopup,
-            LTooltip
+            Simple
+
         },
         data() {
             return {
                 loading: false,
                 model: null,
-                error: null,
-                zoom: 13,
-                center: latLng(47.41322, -1.219482),
-                url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-                attribution:
-                    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-                withPopup: latLng(47.41322, -1.219482),
-                withTooltip: latLng(47.41422, -1.250482),
-                currentZoom: 11.5,
-                currentCenter: latLng(47.41322, -1.219482),
-                showParagraph: false,
-                mapOptions: {
-                    zoomSnap: 0.5
-                }
+                error: null
             }
         },
         created() {
             this.fetchData()
         },
-        computed: {
+        methods: {
             thingDescriptionURl: function () {
                 return `${this.model['@context']}${this.model['@type']}`
-            }
-        },
-
-        methods: {
+            },
             zoomUpdate(zoom) {
                 this.currentZoom = zoom;
             },
@@ -253,15 +193,6 @@
     }
 </script>
 
-<style scoped>
-    #full_div {
-        position: absolute;
-        overflow-x: auto;
-        top: 0;
-        right: 0;
-        left: 208px;
-        bottom: 0;
-        padding-left: 8px;
-        border-left: 1px solid #ccc;
-    }
+<style>
+
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="property">
+        <div v-if="!loading && property">
             <h2><a v-bind:href="thingDescriptionPropertyURL">{{property.title}}</a></h2>
             <h3>Property details</h3>
             <p>{{property.description}}</p>
@@ -46,11 +46,15 @@
 <script>
     export default {
         name: "ThingPropertyDetails",
+        created() {
+            this.fetchData()
+        },
         data() {
             return {
                 property: null,
                 context: "https://schema.iot.webizing.org/",
-                error: null
+                error: null,
+                loading: false
             }
         },
         computed: {
@@ -58,37 +62,21 @@
                 return `${this.context}${this.property['@type']}`
             }
         },
-        async beforeRouteEnter (to, from, next) {
-            const response = await fetch('http://localhost:3000/td/airquality/name',  {headers: {'Accept': 'application/json'}});
-            console.log(await response.json());
-            next(vm => vm.setData(null,  {
-                "@type": "name",
-                "type": "string",
-                "title": "Name",
-                "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                "forms": [
-                    {
-                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
-                        "contentType": "application/json",
-                        "op": [
-                            "readproperty"
-                        ],
-                        "secure": "nosec_sc"
-                    }
-                ],
-                "readOnly": true,
-                "observable": false,
-                "writeOnly": false
-            }))
-        },
         methods: {
-            setData (err, property) {
-                if (err) {
-                    this.error = err.toString()
+            async fetchData() {
+                this.error = this.model = null;
+                this.loading = true;
+
+                const response = await fetch(`http://localhost:3000/td/${this.$route.params.thing}/${this.$route.params.name}`, {headers: {'Accept': 'application/json'}});
+
+                this.loading = false;
+
+                if (!response.ok) {
+                    this.error = response.statusText;
                 } else {
-                    this.property = property
+                    this.property = await response.json()
                 }
-            }
+            },
         }
     }
 </script>

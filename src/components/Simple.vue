@@ -4,11 +4,11 @@
             :zoom="zoom"
             :center="center"
             :options="mapOptions"
-            style="height: 80%"
+            style="height: 100%"
             @update:center="centerUpdate"
             @update:zoom="zoomUpdate"
     >
-      <l-tile-layer :url="url" :attribution="attribution" />
+      <l-tile-layer :options="options" :url="url" />
       <l-marker :lat-lng="withPopup">
         <l-popup>
           <div @click="innerClick">
@@ -53,15 +53,17 @@
     data() {
       return {
         zoom: 13,
-        center: latLng(47.41322, -1.219482),
-        url: "http://{s}.tile.osm.org/{z}/{x}/{y}.png",
-        attribution:
-                '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-        withPopup: latLng(47.41322, -1.219482),
-        withTooltip: latLng(47.41422, -1.250482),
+        center: latLng(37.5984373, 127.0454027),
+        url: "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
+        options: {
+          id: 'mapbox.streets',
+          accessToken: 'pk.eyJ1IjoiYWxleC1raXN0IiwiYSI6ImNqdHpjMjlqZTMydHY0ZW11aXk5MWJyaWIifQ.qreRX0rWCu5Rez1Tv-m0xA'
+        },
+        withPopup: latLng(37.600734, 127.044901),
+        withTooltip: latLng(37.5984373, 127.0454027),
         currentZoom: 11.5,
-        currentCenter: latLng(47.41322, -1.219482),
-        showParagraph: false,
+        currentCenter: latLng(37.784373, 127.754027),
+        showParagraph: true,
         mapOptions: {
           zoomSnap: 0.5
         }
@@ -85,15 +87,8 @@
 </script>
 <style scoped>
   #full_div {
-    position: absolute;
-    overflow-x: auto;
-    top: 0;
-    right: 0;
-    left: 208px;
-    width:500px;
+    display: flex;
+    width:100%;
     height: 500px;
-    bottom: 0;
-    padding-left: 8px;
-    border-left: 1px solid #ccc;
   }
 </style>

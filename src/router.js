@@ -22,14 +22,9 @@ export default new Router({
       component: ThingDetails
     },
     {
-      path: '/td/:thing/property/:name',
+      path: '/td/:thing/:name',
       name: 'thing-property-details',
-      component: ThingDetails
+      component: ThingPropertyDetails
     }
-    // {
-    //   path: '/thing-property-details',
-    //   name: 'thing-property-details',
-    //   component: ThingPropertyDetails
-    // }
   ]
 })
