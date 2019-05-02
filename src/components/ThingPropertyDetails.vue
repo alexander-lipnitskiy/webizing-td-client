@@ -1,86 +1,65 @@
 <template>
-    <div>
-        <div v-if="!loading && property">
-            <h2><a v-bind:href="thingDescriptionPropertyURL">{{property.title}}</a></h2>
-            <h3>Property details</h3>
-            <p>{{property.description}}</p>
+  <div>
+    <div v-if="property">
+      <h2>
+        <el-link
+                style="font-size: 20px; font-weight: bold;"
+                v-bind:href="thingDescriptionPropertyURL()"
+                type="primary"
+        >{{ property.title  }}</el-link>
+      </h2>
 
+      <h3>Property details</h3>
+      <p>{{ property.description }}</p>
 
-            <p><b>Type:</b> {{property.type}}</p>
-            <p><b>Read only:</b> {{property.readOnly}}</p>
-            <p><b>Observable:</b> {{property.observable}}</p>
-            <p><b>Write only:</b> {{property.writeOnly}}</p>
+      <p><b>Type:</b> {{ property.type }}</p>
+      <p><b>Read only:</b> {{ property.readOnly }}</p>
+      <p><b>Observable:</b> {{ property.observable }}</p>
+      <p><b>Write only:</b> {{ property.writeOnly }}</p>
 
+      <h3>Forms</h3>
 
-            <h3>Forms</h3>
-
-            <table class="table table-bordered">
-                <thead>
-                <tr>
-                    <th>URL</th>
-                    <th scope="col">Content Type</th>
-                    <th scope="col">Operations</th>
-                    <th scope="col">Access</th>
-                </tr>
-                </thead>
-
-                <tbody>
-                <tr v-bind:key="key" v-for="(value, key) in property.forms">
-                    <td>{{value.href}}</td>
-                    <td>{{value.contentType}}</td>
-                    <td>{{value.op.join()}}</td>
-                    <td>{{value.secure}}</td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-        <div v-else class="text-center">
-            <div class="spinner-grow text-primary" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-        </div>
-
+      <el-table :data="property.forms" border style="width: 100%">
+        <el-table-column prop="href" label="URL" width="520"></el-table-column>
+        <el-table-column prop="contentType" label="Content Type"></el-table-column>
+        <el-table-column prop="op" label="Operation"> </el-table-column>
+        <el-table-column prop="secure" label="Access"> </el-table-column>
+      </el-table>
     </div>
+    <div v-else class="text-center">
+      <div class="spinner-grow text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "ThingPropertyDetails",
-        created() {
-            this.fetchData()
-        },
-        data() {
-            return {
-                property: null,
-                context: "https://schema.iot.webizing.org/",
-                error: null,
-                loading: false
-            }
-        },
-        computed: {
-            thingDescriptionPropertyURL: function () {
-                return `${this.context}${this.property['@type']}`
-            }
-        },
-        methods: {
-            async fetchData() {
-                this.error = this.model = null;
-                this.loading = true;
 
-                const response = await fetch(`http://localhost:3000/td/${this.$route.params.thing}/${this.$route.params.name}`, {headers: {'Accept': 'application/json'}});
+import { mapGetters } from "vuex";
 
-                this.loading = false;
-
-                if (!response.ok) {
-                    this.error = response.statusText;
-                } else {
-                    this.property = await response.json()
-                }
-            },
-        }
+export default {
+  name: "ThingPropertyDetails",
+  created() {
+    this.property = this.getPropertyDetailsOfSensor(this.$route.params.thing, this.$route.params.name)
+  },
+  data() {
+    return {
+      property: null,
+      context: "https://schema.iot.webizing.org/",
+      error: null,
+      loading: false
+    };
+  },
+  computed: {
+    ...mapGetters(["getPropertyDetailsOfSensor"])
+  },
+  methods: {
+    thingDescriptionPropertyURL: function() {
+      return `${this.context}${this.property["@type"]}`;
     }
+  }
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

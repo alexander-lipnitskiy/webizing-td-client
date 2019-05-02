@@ -10,28 +10,13 @@
     >
       <l-tile-layer :options="options" :url="url" />
       <l-marker :lat-lng="withPopup">
-        <l-popup>
-          <div @click="innerClick">
-            I am a popup
-            <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
+        <l-popup v-bind:key="location.name" v-for="location in locations">
+            <p>
+              Name: {{location.name}}
+              Room: {{location.room}}
+              Location: {{location.location}}
             </p>
-          </div>
         </l-popup>
-      </l-marker>
-      <l-marker :lat-lng="withTooltip">
-        <l-tooltip :options="{ permanent: true, interactive: true }">
-          <div @click="innerClick">
-            I am a tooltip
-            <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
-            </p>
-          </div>
-        </l-tooltip>
       </l-marker>
     </l-map>
   </div>
@@ -39,16 +24,18 @@
 
 <script>
   import { latLng } from "leaflet";
-  import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+  import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 
   export default {
-    name: "Example",
+    name: "Map",
     components: {
       LMap,
       LTileLayer,
       LMarker,
-      LPopup,
-      LTooltip
+      LPopup
+    },
+    props: {
+      locations: Array //[{name: '', room: '', location: ''}]
     },
     data() {
       return {
@@ -59,11 +46,9 @@
           id: 'mapbox.streets',
           accessToken: 'pk.eyJ1IjoiYWxleC1raXN0IiwiYSI6ImNqdHpjMjlqZTMydHY0ZW11aXk5MWJyaWIifQ.qreRX0rWCu5Rez1Tv-m0xA'
         },
-        withPopup: latLng(37.600734, 127.044901),
-        withTooltip: latLng(37.5984373, 127.0454027),
+        withPopup: latLng(37.59852, 127.043216),
         currentZoom: 11.5,
         currentCenter: latLng(37.784373, 127.754027),
-        showParagraph: true,
         mapOptions: {
           zoomSnap: 0.5
         }
@@ -78,9 +63,6 @@
       },
       showLongText() {
         this.showParagraph = !this.showParagraph;
-      },
-      innerClick() {
-        alert("Click!");
       }
     }
   };

@@ -12,7 +12,7 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/index',
+      path: '/td',
       name: 'index',
       component: Index
     },
