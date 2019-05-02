@@ -72,11 +72,12 @@ export default {
       loading: false,
       model: null,
       error: null,
-      locations: [{name: '1', room: '2', location: '3'}]
+      locations: []
     };
   },
   created() {
-    this.model = this.getSensorByName(this.$route.params.thing)
+    this.model = this.getSensorByName(this.$route.params.thing);
+    this.fetchLocationData();
   },
   computed: {
     ...mapGetters(["getSensorByName"])
@@ -85,13 +86,14 @@ export default {
     thingDescriptionURl: function() {
       return `${this.model["@context"]}${this.model["@type"]}`;
     },
-    async fetchData() {
-      this.error = this.model = null;
+    async fetchLocationData() {
       this.loading = true;
 
-      const response = await fetch(
-        `http://localhost:3000/td/${this.$route.params.thing}`,
-        { headers: { Accept: "application/json" } }
+      const response = await fetch(`http://localhost:3000/graphql`, {
+          method: "POST",
+          headers: { Accept: "application/json",  "Content-Type":"application/json"},
+          body: JSON.stringify({ query: `{${this.$route.params.thing} {name address room location}}`})
+        }
       );
 
       this.loading = false;
@@ -99,7 +101,17 @@ export default {
       if (!response.ok) {
         this.error = response.statusText;
       } else {
-        this.model = await response.json();
+        const res = await response.json();
+        const locations = await res.data[this.$route.params.thing];
+
+        if(Array.isArray(locations)) {
+          this.locations = locations
+        } else {
+          this.locations = [locations]
+        }
+
+
+          // console.log(this.locations)
       }
     },
     getPropertiesArray() {
