@@ -2,7 +2,7 @@
   <el-container direction="vertical">
     <el-main>
       <el-row :gutter="24">
-        <el-col :xs="18" :md="18" :offset="3">
+        <el-col :lg="lay" :md="18">
           <router-view/>
         </el-col>
       </el-row>
@@ -15,6 +15,12 @@
   export default {
     name: 'App',
     components: {
+
+    },
+    data() {
+      return {
+        lay: {span: 13, offset: 5}
+      }
     }
   }
 </script>

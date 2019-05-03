@@ -109,9 +109,6 @@ export default {
         } else {
           this.locations = [locations]
         }
-
-
-          // console.log(this.locations)
       }
     },
     getPropertiesArray() {
