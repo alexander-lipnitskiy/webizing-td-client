@@ -1,5 +1,6 @@
 <template>
     <div v-if="!loading">
+        <h3>Properties</h3>
         <div v-bind:key="item['_id']" v-for="item in values" style="padding-bottom: 20px;">
             <el-table :data="item" border style="width: 100%; margin-bottom: 20px;">
                 <el-table-column prop="property" label="Property"></el-table-column>
