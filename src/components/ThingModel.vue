@@ -31,7 +31,7 @@
       <el-table-column label="Property">
         <template slot-scope="scope">
           <el-link
-            v-bind:href="`${$route.params.thing}/${scope.row.property}`"
+            v-bind:href="`properties/${scope.row.property}`"
             type="primary"
             >{{ scope.row.property }}</el-link
           >

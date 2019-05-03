@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import ThingDetails from './components/ThingDetails';
-import ThingPropertyDetails from './components/ThingPropertyDetails';
+import ThingDetails from './components/ThingModel';
+import ThingPropertyDetails from './components/ThingPropertiesID';
 import Index from './components/Index';
 
 Vue.use(Router);
@@ -17,13 +17,18 @@ export default new Router({
       component: Index
     },
     {
-      path: '/td/:thing',
-      name: 'thing-details',
+      path: '/:thing/model',
+      name: 'thing-model',
       component: ThingDetails
     },
     {
-      path: '/td/:thing/:name',
-      name: 'thing-property-details',
+      path: '/:thing/properties',
+      name: 'thing-model',
+      component: ThingDetails
+    },
+    {
+      path: '/:thing/properties/:name',
+      name: 'thing-properties-id',
       component: ThingPropertyDetails
     }
   ]

@@ -2,17 +2,13 @@
   <el-container direction="vertical">
     <el-main>
       <el-row :gutter="24">
-        <el-col :span="14" :offset="5">
-<!--          <router-link to="/index">Home</router-link> |-->
-<!--          <router-link to="/thing-details">ThingDeails</router-link>-->
-<!--          <router-link to="/thing-property-details">Thing property</router-link>-->
+        <el-col :xs="18" :md="18" :offset="3">
           <router-view/>
         </el-col>
       </el-row>
     </el-main>
   </el-container>
 </template>
-
 <script>
 
 

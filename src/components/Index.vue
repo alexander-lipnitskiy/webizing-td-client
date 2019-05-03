@@ -6,7 +6,7 @@
         <h3>Things</h3>
 
         <p v-bind:key="key" v-for="(value, key) in things">
-            <el-link style="font-size: 16px" v-bind:href="`td/${key}`" type="primary">{{value.name}}</el-link>
+            <el-link style="font-size: 16px" v-bind:href="`${key}/model`" type="primary">{{value.name}}</el-link>
             <br>
             {{value.description}}
         </p>
@@ -1884,11 +1884,6 @@
                         }
                     }
                 }
-            }}
-        ,
-        computed: {
-            thingDescriptionURL: function (s) {
-                return 'td/'+ s
             }
         }
     }
