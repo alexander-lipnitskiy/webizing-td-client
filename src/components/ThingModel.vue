@@ -1,13 +1,13 @@
 <template>
   <div v-if="model">
-    <h2>
-      <el-link
-        style="font-size: 20px; font-weight: bold;"
-        v-bind:href="thingDescriptionURl()"
-        type="primary"
-        >{{ model.name }}</el-link
-      >
-    </h2>
+    <span style="font-size: 20px">
+      {{ model.name }}
+    </span>
+    <p>Type of:</p>
+    [ <el-link
+          v-bind:href="thingDescriptionURl()"
+          type="primary"
+    >{{model.name}}</el-link> ]
     <p>Version of TD instance {{ model.version.instance }}</p>
     <h3>Description</h3>
     <p>{{ model.description }}</p>
@@ -89,7 +89,7 @@ export default {
     async fetchLocationData() {
       this.loading = true;
 
-      const response = await fetch(`http://localhost:3000/graphql`, {
+      const response = await fetch(`http://localhost:4000/graphql`, {
           method: "POST",
           headers: { Accept: "application/json",  "Content-Type":"application/json"},
           body: JSON.stringify({ query: `{${this.$route.params.thing} {name address room location}}`})

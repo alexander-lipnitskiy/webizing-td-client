@@ -23,14 +23,12 @@
 
       <div>
         <el-link
-          style="font-size: 16px"
           v-bind:href="`${key}/model`"
           type="primary"
           >model</el-link
         >
         <el-divider direction="vertical"></el-divider>
         <el-link
-          style="font-size: 16px"
           v-bind:href="`${key}/properties`"
           type="primary"
           >properties</el-link

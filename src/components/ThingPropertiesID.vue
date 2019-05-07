@@ -1,13 +1,14 @@
 <template>
   <div>
     <div v-if="property">
-      <h2>
-        <el-link
-                style="font-size: 20px; font-weight: bold;"
+      <span style="font-size: 20px">
+          {{ property.title }}
+        </span>
+          <p>Type of:</p>
+          [ <el-link
                 v-bind:href="thingDescriptionPropertyURL()"
                 type="primary"
-        >{{ property.title  }}</el-link>
-      </h2>
+        >{{property.title}}</el-link> ]
 
       <h3>Property details</h3>
       <p>{{ property.description }}</p>
