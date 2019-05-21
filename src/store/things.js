@@ -1006,7 +1006,7 @@ const state = {
                 "instance": "0.0.1"
             }
         },
-        "ipfsCamera": {
+        "ipIPFSCamera": {
             "id": "https://.../td/IPFSCamera",
             "@context": "https://schema.iot.webizing.org/",
             "@type": [
@@ -1209,7 +1209,7 @@ const state = {
                     "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ sleep {name}}",
+                            "href": "http://localhost:3000/graphql?query={ sleep(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {name}}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1228,7 +1228,7 @@ const state = {
                     "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ sleep {user}}",
+                            "href": "http://localhost:3000/graphql?query={ sleep(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {user}}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1247,7 +1247,7 @@ const state = {
                     "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ sleep { address}}",
+                            "href": "http://localhost:3000/graphql?query={ sleep(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { address}}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1266,7 +1266,7 @@ const state = {
                     "description": "room number of the building where the sensor resides - ex) L8321",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ sleep {room }}",
+                            "href": "http://localhost:3000/graphql?query={ sleep(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {room }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1285,7 +1285,7 @@ const state = {
                     "description": "location of the sensor - format: free",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ sleep { location }}",
+                            "href": "http://localhost:3000/graphql?query={ sleep(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { location }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1297,71 +1297,19 @@ const state = {
                     "observable": false,
                     "writeOnly": false
                 },
-                "time": {
-                    "@type": "time",
-                    "type": "string",
-                    "title": "Time",
-                    "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
-                    "forms": [
-                        {
-                            "href": "http://localhost:3000/graphql?query={ sleep {time }}",
-                            "op": [
-                                "readproperty"
-                            ],
-                            "contentType": "application/json",
-                            "secure": "nosec_sc"
-                        }
-                    ],
-                    "readOnly": true,
-                    "observable": false,
-                    "writeOnly": false
-                },
-                "startDate": {
-                    "@type": "startDate",
-                    "type": "string",
-                    "title": "StartDate",
-                    "description": "start time ex)2017-09-10T00:00:00+09:00",
-                    "forms": [
-                        {
-                            "href": "http://localhost:3000/graphql?query={ sleep {startDate}}",
-                            "op": [
-                                "readproperty"
-                            ],
-                            "contentType": "application/json",
-                            "secure": "nosec_sc"
-                        }
-                    ],
-                    "readOnly": true,
-                    "observable": false,
-                    "writeOnly": false
-                },
-                "endDate": {
-                    "@type": "endDate",
-                    "type": "string",
-                    "title": "EndDate",
-                    "description": "sleep end time ex)2017-09-10T06:30:00+09:00",
-                    "forms": [
-                        {
-                            "href": "http://localhost:3000/graphql?query={ sleep { endDate }}",
-                            "op": [
-                                "readproperty"
-                            ],
-                            "contentType": "application/json",
-                            "secure": "nosec_sc"
-                        }
-                    ],
-                    "readOnly": true,
-                    "observable": false,
-                    "writeOnly": false
-                },
-                "totalSleep": {
+                "sleepAnalysis": {
                     "@type": "totalSleep",
-                    "type": "number",
-                    "title": "TotalSleep",
-                    "description": "totalSleep time - unit: minute",
+                    "type": "array",
+                    "items": {
+                        "startDate": "string",
+                        "endDate": "string",
+                        "status": "string"
+                    },
+                    "title": "Sleep analysis",
+                    "description": "sleep analysis status: Inbed or Asleep",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ sleep {totalSleep }}",
+                            "href": "http://localhost:3000/graphql?query={ sleep(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {totalSleep }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1376,7 +1324,7 @@ const state = {
             },
             "forms": [
                 {
-                    "href": "http://localhost:3000/graphql?query={ sleep {name user   address    room   location    time    startDate   endDate totalSleep }}",
+                    "href": "http://localhost:4000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\")  {name user   address    room   location stepCount{startDate endDate stepCount} heartRate{startDate endDate heartRate} exerciseTime{startDate endDate exerciseTime} standHour{startDate endDate standHour}}}",
                     "contentType": "application/json",
                     "op": [
                         "readallproperties"
@@ -1619,7 +1567,7 @@ const state = {
                     "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {name}}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {name}}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1638,7 +1586,7 @@ const state = {
                     "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {user}}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {user}}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1657,7 +1605,7 @@ const state = {
                     "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch { address }}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { address }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1676,7 +1624,7 @@ const state = {
                     "description": "room number of the building where the sensor resides - ex) L8321",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {room }}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {room }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1695,64 +1643,7 @@ const state = {
                     "description": "location of the sensor - format: free",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch { location }}",
-                            "op": [
-                                "readproperty"
-                            ],
-                            "contentType": "application/json",
-                            "secure": "nosec_sc"
-                        }
-                    ],
-                    "readOnly": true,
-                    "observable": false,
-                    "writeOnly": false
-                },
-                "time": {
-                    "@type": "time",
-                    "type": "string",
-                    "title": "Time",
-                    "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
-                    "forms": [
-                        {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch { time }}",
-                            "op": [
-                                "readproperty"
-                            ],
-                            "contentType": "application/json",
-                            "secure": "nosec_sc"
-                        }
-                    ],
-                    "readOnly": true,
-                    "observable": false,
-                    "writeOnly": false
-                },
-                "startDate": {
-                    "@type": "startDate",
-                    "type": "string",
-                    "title": "Start Date",
-                    "description": "start time ex)2017-09-10T00:00:00+09:00",
-                    "forms": [
-                        {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {startDate }}",
-                            "op": [
-                                "readproperty"
-                            ],
-                            "contentType": "application/json",
-                            "secure": "nosec_sc"
-                        }
-                    ],
-                    "readOnly": true,
-                    "observable": false,
-                    "writeOnly": false
-                },
-                "endDate": {
-                    "@type": "endDate",
-                    "type": "string",
-                    "title": "End Date",
-                    "description": "sleep end time ex)2017-09-10T06:30:00+09:00",
-                    "forms": [
-                        {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {endDate}}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { location }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1766,12 +1657,17 @@ const state = {
                 },
                 "stepCount": {
                     "@type": "stepCount",
-                    "type": "integer",
+                    "type": "array",
+                    "items": {
+                        "startDate": "string",
+                        "endDate": "string",
+                        "stepCount": "integer"
+                    },
                     "title": "Step Count",
                     "description": "걸음 수",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {stepCount}}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") {stepCount}}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1785,12 +1681,17 @@ const state = {
                 },
                 "heartRate": {
                     "@type": "heartRate",
-                    "type": "integer",
+                    "type": "array",
+                    "items": {
+                        "startDate": "string",
+                        "endDate": "string",
+                        "heartRate": "integer"
+                    },
                     "title": "Heart Rate",
                     "description": "심박수 - unit: count/min",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch { heartRate }}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { heartRate }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1804,12 +1705,17 @@ const state = {
                 },
                 "exerciseTime": {
                     "@type": "exerciseTime",
-                    "type": "number",
+                    "type": "array",
+                    "items": {
+                        "startDate": "string",
+                        "endDate": "string",
+                        "exerciseTime": "integer"
+                    },
                     "title": "Exercise Time",
                     "description": "운동시간 - unit: minute",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch { exerciseTime }}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { exerciseTime }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1823,12 +1729,17 @@ const state = {
                 },
                 "standHour": {
                     "@type": "standHour",
-                    "type": "number",
+                    "type": "array",
+                    "items": {
+                        "startDate": "string",
+                        "endDate": "string",
+                        "standHour": "number"
+                    },
                     "title": "Stand Hour",
                     "description": "일어선 시간 - 1: 1시간, 0: 0시간",
                     "forms": [
                         {
-                            "href": "http://localhost:3000/graphql?query={ smartWatch {standHour}}",
+                            "href": "http://localhost:3000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\") { standHour }}",
                             "op": [
                                 "readproperty"
                             ],
@@ -1843,7 +1754,7 @@ const state = {
             },
             "forms": [
                 {
-                    "href": "http://localhost:3000/graphql?query={ smartWatch {name user   address    room   location    time    startDate   endDate stepCount heartRate exerciseTime standHour}}",
+                    "href": "http://localhost:4000/graphql?query={ smartWatch(name:\"smartWatch01\", startDate: \"2019-05-15T10:13:00Z\", endDate: \"2019-05-21T14:03:00Z\")  {name user   address    room   location stepCount{startDate endDate stepCount} heartRate{startDate endDate heartRate} exerciseTime{startDate endDate exerciseTime} standHour{startDate endDate standHour}}}",
                     "contentType": "application/json",
                     "op": [
                         "readallproperties"
