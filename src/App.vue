@@ -2,7 +2,7 @@
   <el-container direction="vertical">
     <el-main>
       <el-row :gutter="24">
-        <el-col :lg="lay" :md="18">
+        <el-col :lg="lg" :sm="sm">
           <router-view/>
         </el-col>
       </el-row>
@@ -19,7 +19,8 @@
     },
     data() {
       return {
-        lay: {span: 13, offset: 5}
+        lg: {span: 18, offset: 3},
+        sm: {span: 22, offset: 1}
       }
     }
   }

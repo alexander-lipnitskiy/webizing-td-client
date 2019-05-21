@@ -4,11 +4,12 @@
       <span style="font-size: 20px">
           {{ property.title }}
         </span>
-          <p>Type of:</p>
+          <p>Type of:
           [ <el-link
                 v-bind:href="thingDescriptionPropertyURL()"
                 type="primary"
         >{{property.title}}</el-link> ]
+          </p>
 
       <h3>Property details</h3>
       <p>{{ property.description }}</p>

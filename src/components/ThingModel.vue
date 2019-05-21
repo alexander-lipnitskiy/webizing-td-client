@@ -3,11 +3,12 @@
     <span style="font-size: 20px">
       {{ model.name }}
     </span>
-    <p>Type of:</p>
+    <p>Type of:
     [ <el-link
           v-bind:href="thingDescriptionURl()"
           type="primary"
     >{{model.name}}</el-link> ]
+    </p>
     <p>Version of TD instance {{ model.version.instance }}</p>
     <h3>Description</h3>
     <p>{{ model.description }}</p>
