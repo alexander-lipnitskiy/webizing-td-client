@@ -5,6 +5,8 @@ import store from './store'
 
 import './plugins/element.js'
 
+import 'nprogress/nprogress.css';
+
 Vue.config.productionTip = false;
 
 new Vue({

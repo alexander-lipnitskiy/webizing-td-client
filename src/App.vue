@@ -17,6 +17,9 @@
     components: {
 
     },
+    created() {
+      this.$store.dispatch('fetchThings');
+    },
     data() {
       return {
         lg: {span: 18, offset: 3},

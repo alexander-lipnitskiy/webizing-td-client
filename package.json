@@ -12,6 +12,7 @@
     "element-ui": "^2.8.2",
     "leaflet": "^1.4.0",
     "leaflet.icon.glyph": "^0.2.1",
+    "nprogress": "^0.2.0",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vue2-leaflet": "^2.1.1",

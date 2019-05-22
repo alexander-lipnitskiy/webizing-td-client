@@ -1,5 +1,5 @@
 <template>
-  <div v-if="model">
+  <div v-if="!loading">
     <span style="font-size: 20px">
       {{ model.name }}
     </span>
@@ -29,13 +29,9 @@
     <h3>Properties</h3>
 
     <el-table :data="getPropertiesArray()" border style="width: 100%">
-      <el-table-column label="Property">
+      <el-table-column width="120" label="Property">
         <template slot-scope="scope">
-          <el-link
-            v-bind:href="`properties/${scope.row.property}`"
-            type="primary"
-            >{{ scope.row.property }}</el-link
-          >
+          <router-link class="el-link el-link--primary is-underline" v-bind:to="`properties/${scope.row.property}`" style="font-size: 16px">{{ scope.row.property }}</router-link>
         </template>
       </el-table-column>
       <el-table-column prop="type" label="Type"> </el-table-column>
@@ -54,13 +50,10 @@
       <el-table-column prop="secure" label="Access"> </el-table-column>
     </el-table>
   </div>
-  <div v-else class="text-center">
-    loading
-  </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapState } from "vuex";
 import Map from "./Map";
 
 export default {
@@ -70,25 +63,28 @@ export default {
   },
   data() {
     return {
-      loading: false,
-      model: null,
-      error: null,
       locations: []
     };
   },
+
   created() {
-    this.model = this.getSensorByName(this.$route.params.thing);
     this.fetchLocationData();
   },
   computed: {
-    ...mapGetters(["getSensorByName"])
+    model () {
+      return this.$store.getters.getSensorByName(this.$route.params.thing)
+    },
+    ...mapState({
+      loading: state => state.things.loading,
+      error: state => state.things.error
+    })
   },
   methods: {
     thingDescriptionURl: function() {
       return `${this.model["@context"]}${this.model["@type"]}`;
     },
     async fetchLocationData() {
-      this.loading = true;
+      // this.loading = true;
 
       const response = await fetch(`http://localhost:4000/graphql`, {
           method: "POST",
@@ -97,10 +93,10 @@ export default {
         }
       );
 
-      this.loading = false;
+      // this.loading = false;
 
       if (!response.ok) {
-        this.error = response.statusText;
+        // this.error = response.statusText;
       } else {
         const res = await response.json();
         const locations = await res.data[this.$route.params.thing];
@@ -112,6 +108,7 @@ export default {
         }
       }
     },
+
     getPropertiesArray() {
       let output = [];
       const obj = this.model.properties;
