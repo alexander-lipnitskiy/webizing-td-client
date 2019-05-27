@@ -7,6 +7,9 @@ import './plugins/element.js'
 
 import 'nprogress/nprogress.css';
 
+import TreeView from "vue-json-tree-view"
+Vue.use(TreeView);
+
 Vue.config.productionTip = false;
 
 new Vue({

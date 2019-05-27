@@ -1,54 +1,69 @@
 <template>
   <div v-if="!loading">
-    <span style="font-size: 20px">
-      {{ model.name }}
-    </span>
-    <p>Type of:
-    [ <el-link
-          v-bind:href="thingDescriptionURl()"
-          type="primary"
-    >{{model.name}}</el-link> ]
-    </p>
-    <p>Version of TD instance {{ model.version.instance }}</p>
-    <h3>Description</h3>
-    <p>{{ model.description }}</p>
 
-    <h3>Location</h3>
-    <Map v-bind:locations="locations"></Map>
+    <div style="display: flex; width: 100%; justify-content: flex-end;">
+      <span style="font-size: 20px; margin-right: auto;">
+        {{ model.name }}
+      </span>
+      <el-button-group>
+        <el-button size="small" v-on:click="toogleRepresentation(true)">JSON</el-button>
+        <el-button size="small" v-on:click="toogleRepresentation(false)">Visual</el-button>
+      </el-button-group>
+    </div>
 
-    <h3>Security</h3>
+    <div v-if="isJsonRepresentation">
+      <br>
+      <tree-view v-bind:data="model" :options="{maxDepth: 5}"></tree-view>
+    </div>
+    <div v-else>
 
-    <el-table :data="getSecurityArray()" border style="width: 100%">
-      <el-table-column prop="type" label="Type"> </el-table-column>
-      <el-table-column prop="scheme" label="Security mechanism">
-      </el-table-column>
-      <el-table-column prop="description" width="420" label="Description">
-      </el-table-column>
-    </el-table>
+      <p>Type of:
+        [ <el-link
+                v-bind:href="thingDescriptionURl()"
+                type="primary"
+        >{{model.name}}</el-link> ]
+      </p>
+      <p>Version of TD instance {{ model.version.instance }}</p>
+      <h3>Description</h3>
+      <p>{{ model.description }}</p>
 
-    <h3>Properties</h3>
+      <h3>Location</h3>
+      <Map v-bind:locations="locations"></Map>
 
-    <el-table :data="getPropertiesArray()" border style="width: 100%">
-      <el-table-column width="120" label="Property">
-        <template slot-scope="scope">
-          <router-link class="el-link el-link--primary is-underline" v-bind:to="`properties/${scope.row.property}`" style="font-size: 16px">{{ scope.row.property }}</router-link>
-        </template>
-      </el-table-column>
-      <el-table-column prop="type" label="Type"> </el-table-column>
-      <el-table-column prop="description" width="720" label="Description">
-      </el-table-column>
-      <el-table-column prop="readOnly" label="ReadOnly"> </el-table-column>
-    </el-table>
+      <h3>Security</h3>
 
-    <h3>Forms</h3>
+      <el-table :data="getSecurityArray()" border style="width: 100%">
+        <el-table-column prop="type" label="Type"> </el-table-column>
+        <el-table-column prop="scheme" label="Security mechanism">
+        </el-table-column>
+        <el-table-column prop="description" width="420" label="Description">
+        </el-table-column>
+      </el-table>
 
-    <el-table :data="model.forms" border style="width: 100%">
-      <el-table-column prop="href" label="URL" width="520"> </el-table-column>
-      <el-table-column prop="contentType" label="Content Type">
-      </el-table-column>
-      <el-table-column prop="op" label="Operation"> </el-table-column>
-      <el-table-column prop="secure" label="Access"> </el-table-column>
-    </el-table>
+      <h3>Properties</h3>
+
+      <el-table :data="getPropertiesArray()" border style="width: 100%">
+        <el-table-column width="120" label="Property">
+          <template slot-scope="scope">
+            <router-link class="el-link el-link--primary is-underline" v-bind:to="`properties/${scope.row.property}`" style="font-size: 16px">{{ scope.row.property }}</router-link>
+          </template>
+        </el-table-column>
+        <el-table-column prop="type" label="Type"> </el-table-column>
+        <el-table-column prop="description" width="720" label="Description">
+        </el-table-column>
+        <el-table-column prop="readOnly" label="ReadOnly"> </el-table-column>
+      </el-table>
+
+      <h3>Forms</h3>
+
+      <el-table :data="model.forms" border style="width: 100%">
+        <el-table-column prop="href" label="URL" width="520"> </el-table-column>
+        <el-table-column prop="contentType" label="Content Type">
+        </el-table-column>
+        <el-table-column prop="op" label="Operation"> </el-table-column>
+        <el-table-column prop="secure" label="Access"> </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
@@ -63,7 +78,8 @@ export default {
   },
   data() {
     return {
-      locations: []
+      locations: [],
+      isJsonRepresentation: false
     };
   },
 
@@ -108,7 +124,9 @@ export default {
         }
       }
     },
-
+    toogleRepresentation: function (isJson) {
+      this.isJsonRepresentation = isJson
+    },
     getPropertiesArray() {
       let output = [];
       const obj = this.model.properties;
