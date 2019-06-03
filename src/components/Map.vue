@@ -13,10 +13,17 @@
         <l-marker :lat-lng="withPopup">
           <l-popup>
             <div>
-              <p v-bind:key="location.name" v-for="location in locations">
+              <h3 v-if="locations[0].hasOwnProperty('name') && locations[0].name=='cushion02'">
+                Home for the elderly
+              </h3>
+              <h3 v-else>KIST Laboratory 8</h3>
+              <b>Sensor details:</b>
+              <div v-bind:key="location.name" v-for="location in locations">
+
                 Name: {{ location.name }} Room: {{ location.room }} Location:
                 {{ location.location }}
-              </p>
+                <br>
+              </div>
             </div>
           </l-popup>
         </l-marker>
@@ -43,7 +50,7 @@ export default {
   data() {
     return {
       zoom: 13,
-      center: latLng(37.5984373, 127.0454027),
+      // center: latLng(37.5984373, 127.0454027),
       url:
         "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
       options: {
@@ -51,7 +58,7 @@ export default {
         accessToken:
           "pk.eyJ1IjoiYWxleC1raXN0IiwiYSI6ImNqdHpjMjlqZTMydHY0ZW11aXk5MWJyaWIifQ.qreRX0rWCu5Rez1Tv-m0xA"
       },
-      withPopup: latLng(37.59852, 127.043216),
+      // withPopup: latLng(37.59852, 127.043216),
       currentZoom: 11.5,
       currentCenter: latLng(37.784373, 127.754027),
       mapOptions: {
@@ -65,6 +72,20 @@ export default {
     },
     centerUpdate(center) {
       this.currentCenter = center;
+    }
+  },
+  computed: {
+    withPopup() {
+      if(this.locations.length && this.locations[0].name === "cushion02") {
+        return latLng(37.567674, 126.902011)
+      }
+      return latLng(37.59852, 127.043216)
+    },
+    center() {
+      if(this.locations.length && this.locations[0].name === "cushion02") {
+        return latLng(37.567674, 126.902011)
+      }
+      return latLng(37.5984373, 127.0454027)
     }
   }
 };

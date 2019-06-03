@@ -95,6 +95,9 @@ export default {
       error: state => state.things.error
     })
   },
+  watch: {
+    '$route':'fetchLocationData'
+  },
   methods: {
     thingDescriptionURl: function() {
       return `${this.model["@context"]}${this.model["@type"]}`;

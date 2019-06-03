@@ -15,8 +15,9 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      component: Index
+      redirect: '/airQuality/model'
     },
+
     {
       path: '/:thing/model',
       name: 'thing-model',

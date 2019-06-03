@@ -33,7 +33,7 @@ export default {
     ...mapState({
       things: state => state.things.td
     })
-  },
+  }
 };
 </script>
 
