@@ -19,7 +19,7 @@
               >
               <el-menu-item index="/airQuality/model">
                 <i class="el-icon-wind-power"></i>
-                <router-link tag="span" v-bind:to="`/airQuality/model`">Air Quality</router-link>
+                <router-link tag="span" v-bind:to="`/airQuality/model`">Air Quality </router-link>
               </el-menu-item>
 
               <el-menu-item index="/cushion/model">
@@ -28,7 +28,7 @@
               </el-menu-item>
               <el-menu-item index="/energyApplianceMonitor/model">
                 <i class="el-icon-monitor"></i>
-                <router-link tag="span" v-bind:to="`/energyApplianceMonitor/model`">Energy Appliance Monitor</router-link>
+                <router-link tag="span" class="development" v-bind:to="`/energyApplianceMonitor/model`">Energy Appliance Monitor</router-link>
               </el-menu-item>
               <el-menu-item index="/energyMonitor/model">
                 <i class="el-icon-monitor"></i>
@@ -36,22 +36,19 @@
               </el-menu-item>
               <el-menu-item index="/ipCamera/model">
                 <i class="el-icon-video-camera"></i>
-                <router-link tag="span" v-bind:to="`/ipCamera/model`">IPCamera</router-link>
+                <router-link class="development" tag="span" v-bind:to="`/ipCamera/model`">IPCamera</router-link>
               </el-menu-item>
               <el-menu-item index="/ipfsCamera/model">
                 <i class="el-icon-video-camera-solid"></i>
-                <router-link tag="span" v-bind:to="`/ipfsCamera/model`">IPFSCamera</router-link>
-                <span></span>
+                <router-link class="development" tag="span" v-bind:to="`/ipfsCamera/model`">IPFSCamera</router-link>
               </el-menu-item>
               <el-menu-item index="/sleep/model">
                 <i class="el-icon-moon"></i>
                 <router-link tag="span" v-bind:to="`/sleep/model`">Sleep Monitoring</router-link>
-                <span></span>
               </el-menu-item>
-              <el-menu-item index="/smartTable/model">
+              <el-menu-item  index="/smartTable/model">
                 <i class="el-icon-knife-fork"></i>
-                <router-link tag="span" v-bind:to="`/smartTable/model`">Smart Table</router-link>
-                <span></span>
+                <router-link class="development" tag="span" v-bind:to="`/smartTable/model`">Smart Table</router-link>
               </el-menu-item>
               <el-menu-item index="/smartWatch/model">
                 <i class="el-icon-watch-1"></i>
@@ -119,7 +116,9 @@
       position: relative;
     }
 
-
+    .development {
+        color: #F56C6C;
+    }
 
 </style>
 

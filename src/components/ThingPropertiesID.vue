@@ -21,6 +21,21 @@
       <p><b>Observable:</b> {{ property.observable }}</p>
       <p><b>Write only:</b> {{ property.writeOnly }}</p>
 
+      <h3 v-if="uriVariables.length !== 0">Uri Variables</h3>
+
+      <el-table :data="uriVariables" v-if="uriVariables.length !== 0" border style="width: 100%">
+        <el-table-column prop="name" label="Name of variable" width="520"></el-table-column>
+        <el-table-column prop="typeOf" label="Type of">
+          <template slot-scope="scope">
+            <el-link
+                    v-bind:href="ontologyLink(scope.row.typeOf)"
+                    type="primary"
+            >{{scope.row.typeOf}}</el-link>
+          </template>
+        </el-table-column>
+        <el-table-column prop="type" label="type"> </el-table-column>
+      </el-table>
+
       <h3>Forms</h3>
 
       <el-table :data="property.forms" border style="width: 100%">
@@ -47,6 +62,24 @@ export default {
     property () {
       return this.$store.getters.getPropertyDetailsOfSensor(this.$route.params.thing, this.$route.params.name)
     },
+    uriVariables () {
+      const property = this.$store.getters.getPropertyDetailsOfSensor(this.$route.params.thing, this.$route.params.name);
+      if (property.hasOwnProperty('uriVariables')) {
+        let output = [];
+        const obj = property.uriVariables;
+
+        for (const key of Object.keys(obj)) {
+          output.push({
+            name: key,
+            typeOf: obj[key]['@type'],
+            type: obj[key].type
+          });
+        }
+
+        return output;
+      }
+      return []
+    },
     ...mapState({
       loading: state => state.things.loading,
       error: state => state.things.error
@@ -55,6 +88,9 @@ export default {
   methods: {
     thingDescriptionPropertyURL: function() {
       return `${this.context}${this.property["@type"]}`;
+    },
+    ontologyLink: function(param) {
+      return `${this.context}${param}`;
     }
   }
 };

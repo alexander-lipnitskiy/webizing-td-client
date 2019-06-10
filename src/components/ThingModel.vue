@@ -43,7 +43,7 @@
       <h3>Properties</h3>
 
       <el-table :data="getPropertiesArray()" border style="width: 100%">
-        <el-table-column width="120" label="Property">
+        <el-table-column width="180" label="Property">
           <template slot-scope="scope">
             <router-link class="el-link el-link--primary is-underline" v-bind:to="`properties/${scope.row.property}`" style="font-size: 16px">{{ scope.row.property }}</router-link>
           </template>
