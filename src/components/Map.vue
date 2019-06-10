@@ -9,7 +9,7 @@
       @update:zoom="zoomUpdate"
     >
       <l-tile-layer :options="options" :url="url" />
-      <div v-if="locations.length">
+      <div v-if="locations.length > 0">
         <l-marker :lat-lng="withPopup">
           <l-popup>
             <div>

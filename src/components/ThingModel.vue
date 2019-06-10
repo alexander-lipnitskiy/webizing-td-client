@@ -118,13 +118,19 @@ export default {
         // this.error = response.statusText;
       } else {
         const res = await response.json();
-        const locations = await res.data[this.$route.params.thing];
-
-        if(Array.isArray(locations)) {
-          this.locations = locations
+        if(res.hasOwnProperty('errors')) {
+          this.locations = []
         } else {
-          this.locations = [locations]
+          const locations = await res.data[this.$route.params.thing];
+
+          if(Array.isArray(locations)) {
+            this.locations = locations
+          } else {
+            this.locations = [locations]
+          }
         }
+
+
       }
     },
     toogleRepresentation: function (isJson) {
