@@ -58,12 +58,14 @@
           </el-aside>
           <el-main style=" padding-left: 3em; padding-top: 4em;">
 
-            <router-view/>
+            <transition name="fade" mode="out-in">
+                <router-view/>
+            </transition>
+
 
           </el-main>
         </el-container>
       </el-container>
-<!--      <router-view/>-->
     </el-col>
   </el-row>
 

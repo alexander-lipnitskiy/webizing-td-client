@@ -4,7 +4,8 @@ import Router from 'vue-router'
 import ThingDetails from './components/ThingModel';
 import ThingPropertyID from './components/ThingPropertiesID';
 import ThingProperties from './components/ThingProperties';
-import Index from './components/Index';
+import HomeForElderlyMap from './components/HomeForElderlyMap';
+import IPCameraDashboard from './components/IPCameraDashboard';
 
 Vue.use(Router);
 
@@ -17,7 +18,16 @@ export default new Router({
       name: 'index',
       redirect: '/airQuality/model'
     },
-
+    {
+      path: '/dashboard',
+      name: 'thing-properties-dashboard',
+      component: HomeForElderlyMap
+    },
+    {
+      path: '/ipCamera/dashboard',
+      name: 'ipCamera-dashboard',
+      component: IPCameraDashboard
+    },
     {
       path: '/:thing/model',
       name: 'thing-model',

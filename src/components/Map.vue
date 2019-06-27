@@ -13,7 +13,7 @@
         <l-marker :lat-lng="withPopup">
           <l-popup>
             <div>
-              <h3 v-if="locations[0].hasOwnProperty('name') && locations[0].name=='cushion02'">
+              <h3 v-if="locations[0].hasOwnProperty('name') && locations[0].name=='cushion02' || locations[0].name=='ipCamera01'">
                 Home for the elderly
               </h3>
               <h3 v-else>KIST Laboratory 8</h3>
@@ -78,11 +78,15 @@ export default {
     withPopup() {
       if(this.locations.length && this.locations[0].name === "cushion02") {
         return latLng(37.567674, 126.902011)
+      } else if(this.locations.length && this.locations[0].name === "ipCamera01") {
+        return latLng(37.567674, 126.902011)
       }
       return latLng(37.59852, 127.043216)
     },
     center() {
       if(this.locations.length && this.locations[0].name === "cushion02") {
+        return latLng(37.567674, 126.902011)
+      }else if(this.locations.length && this.locations[0].name === "ipCamera01") {
         return latLng(37.567674, 126.902011)
       }
       return latLng(37.5984373, 127.0454027)

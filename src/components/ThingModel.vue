@@ -129,8 +129,6 @@ export default {
             this.locations = [locations]
           }
         }
-
-
       }
     },
     toogleRepresentation: function (isJson) {
