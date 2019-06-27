@@ -80,7 +80,7 @@
 
     },
     created() {
-      this.$store.dispatch('fetchThings');
+      this.$store.dispatch('fetchMockupThings');
     },
     data() {
       return {

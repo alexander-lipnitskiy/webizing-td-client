@@ -5,12 +5,15 @@
       <span style="font-size: 20px; margin-right: auto;">
         {{ model.name }}
       </span>
+
       <el-button-group>
         <el-button size="small" v-on:click="toogleRepresentation(true)">JSON</el-button>
         <el-button size="small" v-on:click="toogleRepresentation(false)">Visual</el-button>
       </el-button-group>
     </div>
-
+    <div v-if="$route.params.thing == 'ipCamera'">
+      <router-link class="el-link el-link--primary is-underline" v-bind:to="`/ipCamera/dashboard`" style="font-size: 16px">dashboard (in dev)</router-link>
+    </div>
     <div v-if="isJsonRepresentation">
       <br>
       <tree-view v-bind:data="model" :options="{maxDepth: 5}"></tree-view>
@@ -27,8 +30,11 @@
       <h3>Description</h3>
       <p>{{ model.description }}</p>
 
-      <h3>Location</h3>
-      <Map v-bind:locations="locations"></Map>
+      <div v-if="$route.params.thing != 'ipCamera'">
+        <h3>Location</h3>
+        <Map v-bind:locations="locations"></Map>
+      </div>
+
 
       <h3>Security</h3>
 

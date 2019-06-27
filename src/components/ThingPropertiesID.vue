@@ -60,7 +60,8 @@ export default {
   },
   computed: {
     property () {
-      return this.$store.getters.getPropertyDetailsOfSensor(this.$route.params.thing, this.$route.params.name)
+      if(!this.loading)
+        return this.$store.getters.getPropertyDetailsOfSensor(this.$route.params.thing, this.$route.params.name)
     },
     uriVariables () {
       const property = this.$store.getters.getPropertyDetailsOfSensor(this.$route.params.thing, this.$route.params.name);
