@@ -1,5 +1,14 @@
 # webizing-td-client
 
+# Run Dockerfile for production
+
+```
+docker build -t td-vuejs-app .
+
+docker run -it -p 8080:80 --rm --name webizing-td td-vuejs-app
+```
+
+
 ## Project setup
 ```
 yarn install
