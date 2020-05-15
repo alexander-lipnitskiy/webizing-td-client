@@ -30,10 +30,6 @@
       <h3>Description</h3>
       <p>{{ model.description }}</p>
 
-      <div v-if="$route.params.thing != 'ipCamera'">
-        <h3>Location</h3>
-        <Map v-bind:locations="locations"></Map>
-      </div>
 
 
       <h3>Security</h3>

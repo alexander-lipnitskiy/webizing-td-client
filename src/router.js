@@ -6,6 +6,8 @@ import ThingPropertyID from './components/ThingPropertiesID';
 import ThingProperties from './components/ThingProperties';
 import HomeForElderlyMap from './components/HomeForElderlyMap';
 import IPCameraDashboard from './components/IPCameraDashboard';
+import OrbitdbDash from './components/OrbitdbDash';
+import Dashboard from './components/Dashboard';
 
 Vue.use(Router);
 
@@ -17,6 +19,16 @@ export default new Router({
       path: '/',
       name: 'index',
       redirect: '/airQuality/model'
+    },
+    {
+      path: '/rapberry-pi/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/orbitdb-dashboard',
+      name: 'orbitdb-dash',
+      component: OrbitdbDash
     },
     {
       path: '/dashboard',

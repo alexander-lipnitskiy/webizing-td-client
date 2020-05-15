@@ -22,15 +22,15 @@ const actions = {
             NProgress.start();
             await setTimeout(() => {
                 commit('addThings', {
-                    "airQuality": {
+                    "raspberry-pi": {
                         "@context": "https://schema.iot.webizing.org/",
                         "@type": [
-                            "AirQuality"
+                            "raspberry-pi"
                         ],
                         "id": "https://.../td/AirQuality",
-                        "name": "Air Quality Sensor",
+                        "name": "Raspberry Pi",
                         "names": "",
-                        "description": "공기질 로깅 ex)Foobot(5분 주기로 데이터를 가져옴)",
+                        "description": "A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it.",
                         "properties": {
                             "name": {
                                 "@type": "name",
@@ -40,25 +40,6 @@ const actions = {
                                 "forms": [
                                     {
                                         "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {user}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -127,128 +108,14 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {time}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "humidity": {
-                                "@type": "humidity",
-                                "type": "number",
-                                "title": "Humidity",
-                                "description": "습도 - unit: %",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {humidity}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "temp": {
+                            "state": {
                                 "@type": "temp",
-                                "type": "number",
-                                "title": "Temp",
-                                "description": "temperature - unit: Celsius(℃)",
+                                "type": "boolean",
+                                "title": "State",
+                                "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {temp}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "particle": {
-                                "@type": "particle",
-                                "type": "number",
-                                "title": "Particle",
-                                "description": "pm2.5 - unit: ㎍/㎥",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {particle}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "co2": {
-                                "@type": "co2",
-                                "type": "number",
-                                "title": "Co2",
-                                "description": "이산화탄소 - unit: ppm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {co2}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "voc": {
-                                "@type": "voc",
-                                "type": "number",
-                                "title": "Voc",
-                                "description": "휘발성 유기 화합물 - unit: ppb",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {voc}}",
-                                        "contentType": "application/json",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "pollution": {
-                                "@type": "pollution",
-                                "type": "number",
-                                "title": "Pollution",
-                                "description": "미세먼지 - unit: TBD",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {pollution}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -263,7 +130,15 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ airQuality {name user   address    room   location    time    humidity    temp   particle   co2    voc    pollution  }}",
+                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
+                                "contentType": "application/json",
+                                "op": [
+                                    "readallproperties"
+                                ],
+                                "secure": "nosec_sc"
+                            },
+                            {
+                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -284,15 +159,15 @@ const actions = {
                             "instance": "0.0.1"
                         }
                     },
-                    "cushion": {
-                        "id": "https://.../td/Cushion",
+                    "led": {
                         "@context": "https://schema.iot.webizing.org/",
                         "@type": [
-                            "Cushion"
+                            "led"
                         ],
-                        "name": "Cushion Sensor",
+                        "id": "https://.../td/AirQuality",
+                        "name": "Led Sensor",
                         "names": "",
-                        "description": "앉아 있는지 여부를 판단",
+                        "description": "A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it.",
                         "properties": {
                             "name": {
                                 "@type": "name",
@@ -301,30 +176,11 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {user}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -339,11 +195,11 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {address}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -358,11 +214,11 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {room}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -377,11 +233,11 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {location }}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -389,75 +245,18 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {time}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "pressure": {
-                                "@type": "pressure",
-                                "type": "number",
-                                "title": "Pressure",
-                                "description": "unit is to be defined",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {pressure}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "temp": {
+                            "state": {
                                 "@type": "temp",
-                                "type": "number",
-                                "title": "Temp",
-                                "description": "temperature - unit: Celsius(℃)",
+                                "type": "boolean",
+                                "title": "State",
+                                "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {temp }}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "status": {
-                                "@type": "status",
-                                "type": "number",
-                                "title": "Status",
-                                "description": "pm2.5 - unit: ㎍/㎥",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {status }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -468,7 +267,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:4000/graphql?query={ cushion {_id _index  name user   address    room   location    time    pressure    temp   status }}",
+                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -478,8 +277,8 @@ const actions = {
                         ],
                         "securityDefinitions": {
                             "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
+                                "scheme": "nosec",
+                                "description": "no security"
                             }
                         },
                         "security": [
@@ -489,15 +288,15 @@ const actions = {
                             "instance": "0.0.1"
                         }
                     },
-                    "energyApplianceMonitor": {
-                        "id": "https://.../td/Cushion",
+                    "motion": {
                         "@context": "https://schema.iot.webizing.org/",
                         "@type": [
-                            "EnergyApplianceMonitor"
+                            "motion"
                         ],
-                        "name": "EnergyApplianceMonitor Sensor",
+                        "id": "https://.../td/AirQuality",
+                        "name": "Motion Pir Sensor",
                         "names": "",
-                        "description": "공기질 로깅 ex)Foobot(5분 주기로 데이터를 가져옴)",
+                        "description": "Allow you to sense motion, almost always used to detect whether a human has moved in or out of the sensors range.",
                         "properties": {
                             "name": {
                                 "@type": "name",
@@ -506,30 +305,11 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {user}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -544,197 +324,11 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {address}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "observable": false,
-                                "readOnly": true,
-                                "writeOnly": false
-                            },
-                            "room": {
-                                "@type": "room",
-                                "type": "string",
-                                "title": "Room",
-                                "description": "room number of the building where the sensor resides - ex) L8321",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {room}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "observable": false,
-                                "readOnly": true,
-                                "writeOnly": false
-                            },
-                            "location": {
-                                "@type": "location",
-                                "type": "string",
-                                "title": "Location",
-                                "description": "location of the sensor - format: free",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {location}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "observable": false,
-                                "readOnly": true,
-                                "writeOnly": false
-                            },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {time}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "observable": false,
-                                "readOnly": true,
-                                "writeOnly": false
-                            },
-                            "applianceId": {
-                                "@type": "applianceId",
-                                "type": "string",
-                                "title": "ApplianceId",
-                                "description": "unit is to be defined",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {applianceId}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "observable": false,
-                                "readOnly": true,
-                                "writeOnly": false
-                            },
-                            "activePower": {
-                                "@type": "activePower",
-                                "type": "number",
-                                "title": "ActivePower",
-                                "description": "appliance activePower - unit: W, 양수: On, 음수: Off",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {activePower}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            }
-                        },
-                        "forms": [
-                            {
-                                "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {name user address room location time applianceId activePower}}",
-                                "contentType": "application/json",
-                                "op": [
-                                    "readallproperties"
-                                ],
-                                "secure": "nosec_sc"
-                            }
-                        ],
-                        "securityDefinitions": {
-                            "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
-                            }
-                        },
-                        "security": [
-                            "nosec_sc"
-                        ],
-                        "version": {
-                            "instance": "0.0.1"
-                        }
-                    },
-                    "energyMonitor": {
-                        "id": "https://.../td/EnergyMonitor",
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "EnergyMonitor"
-                        ],
-                        "name": "EnergyMonitor Sensor",
-                        "names": "",
-                        "description": "전력 사용량 모니터링 ex)Smappee(5분 주기로 데이터를 가져옴), Enertalk",
-                        "properties": {
-                            "name": {
-                                "@type": "name",
-                                "type": "string",
-                                "title": "Name",
-                                "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {name}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {user}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "address": {
-                                "@type": "address",
-                                "type": "string",
-                                "title": "Address",
-                                "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {address}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -749,11 +343,11 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {room}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -768,11 +362,11 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {location}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -780,56 +374,18 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
+                            "state": {
+                                "@type": "temp",
+                                "type": "boolean",
+                                "title": "State",
+                                "description": "Current state of motion sensor, true - motion detected. false - motion undetected",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {time}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "consumption": {
-                                "@type": "consumption",
-                                "type": "number",
-                                "title": "Consumption",
-                                "description": "unit is to be defined",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor { consumption }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "alwaysOn": {
-                                "@type": "schema:Float",
-                                "type": "number",
-                                "title": "AlwaysOn",
-                                "description": "Standby Power - unit: W",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ energyMonitor {alwaysOn}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -840,7 +396,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ energyMonitor {name user   address    room   location    time    consumption   alwaysOn }}",
+                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -850,8 +406,8 @@ const actions = {
                         ],
                         "securityDefinitions": {
                             "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
+                                "scheme": "nosec",
+                                "description": "no security"
                             }
                         },
                         "security": [
@@ -861,15 +417,15 @@ const actions = {
                             "instance": "0.0.1"
                         }
                     },
-                    "ipCamera": {
-                        "id": "https://.../td/IPCamera",
+                    "light": {
                         "@context": "https://schema.iot.webizing.org/",
                         "@type": [
-                            "IPCamera"
+                            "light"
                         ],
-                        "name": "IPCamera Sensor",
+                        "id": "https://.../td/AirQuality",
+                        "name": "Light Sensor",
                         "names": "",
-                        "description": "video content from the IP Camera",
+                        "description": "A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it.",
                         "properties": {
                             "name": {
                                 "@type": "name",
@@ -878,30 +434,11 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ ipCamera {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ ipCamera {user }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -916,178 +453,11 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ ipCamera { address }}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "room": {
-                                "@type": "schema:Text",
-                                "type": "string",
-                                "title": "Room",
-                                "description": "room number of the building where the sensor resides - ex) L8321",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ ipCamera {room}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "location": {
-                                "@type": "location",
-                                "type": "string",
-                                "title": "Location",
-                                "description": "location of the sensor - format: free",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ ipCamera {location}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ ipCamera {time }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "url": {
-                                "@type": "url",
-                                "type": "string",
-                                "title": "URL",
-                                "description": "link to the video",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={url}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            }
-                        },
-                        "forms": [
-                            {
-                                "href": "http://localhost:3000/graphql?query={ ipCamera {name user address room location time url}}",
-                                "contentType": "application/json",
-                                "op": [
-                                    "readallproperties"
-                                ],
-                                "secure": "nosec_sc"
-                            }
-                        ],
-                        "securityDefinitions": {
-                            "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
-                            }
-                        },
-                        "security": [
-                            "nosec_sc"
-                        ],
-                        "version": {
-                            "instance": "0.0.1"
-                        }
-                    },
-                    "ipfsCamera": {
-                        "id": "https://.../td/IPFSCamera",
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "IPFSCamera"
-                        ],
-                        "name": "IPFSCamera Sensor",
-                        "names": "",
-                        "description": "video content from the IP Camera",
-                        "properties": {
-                            "name": {
-                                "@type": "name",
-                                "type": "string",
-                                "title": "Name",
-                                "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {name}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {user}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "address": {
-                                "@type": "address",
-                                "type": "string",
-                                "title": "Address",
-                                "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {address}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1102,11 +472,11 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera { room }}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1121,11 +491,11 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {location}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1133,56 +503,18 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
+                            "state": {
+                                "@type": "temp",
+                                "type": "boolean",
+                                "title": "State",
+                                "description": "Current state of Light sensor, true -light. false - dark",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {time}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "url": {
-                                "@type": "url",
-                                "type": "string",
-                                "title": "URL",
-                                "description": "link to the video",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {url}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "hash": {
-                                "@type": "hash",
-                                "type": "string",
-                                "title": "Hash",
-                                "description": "hash to the video file in the IPFS system",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ipfsCamera {hash}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1193,7 +525,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ipfsCamera {name user   address    room   location    time    url  hash}}",
+                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -1203,8 +535,8 @@ const actions = {
                         ],
                         "securityDefinitions": {
                             "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
+                                "scheme": "nosec",
+                                "description": "no security"
                             }
                         },
                         "security": [
@@ -1214,227 +546,15 @@ const actions = {
                             "instance": "0.0.1"
                         }
                     },
-                    "sleep": {
-                        "id": "https://.../td/Sleep",
+                    "gyroscope": {
                         "@context": "https://schema.iot.webizing.org/",
                         "@type": [
-                            "Sleep"
+                            "gyroscope"
                         ],
-                        "name": "Sleep Monitoring Sensor",
+                        "id": "https://.../td/AirQuality",
+                        "name": "Gyroscope Sensor",
                         "names": "",
-                        "description": "수면 시작 시간, 수면 끝 시간, 총 수면 시간 로깅 JSON-LD Format ex)Beddit, Fitbit",
-                        "properties": {
-                            "name": {
-                                "@type": "name",
-                                "type": "string",
-                                "title": "Name",
-                                "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ sleep(name) {name}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ sleep(name) {user}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "address": {
-                                "@type": "address",
-                                "type": "string",
-                                "title": "Address",
-                                "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ sleep(name) { address }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "room": {
-                                "@type": "room",
-                                "type": "string",
-                                "title": "Room",
-                                "description": "room number of the building where the sensor resides - ex) L8321",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ sleep(name) {room }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "location": {
-                                "@type": "location",
-                                "type": "string",
-                                "title": "Location",
-                                "description": "location of the sensor - format: free",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ sleep(name) { location }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "sleepAnalysis": {
-                                "@type": "totalSleep",
-                                "type": "array",
-                                "items": {
-                                    "startDate": "string",
-                                    "endDate": "string",
-                                    "status": "string"
-                                },
-                                "title": "Sleep analysis",
-                                "description": "sleep analysis status: Inbed or Asleep or Awake",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ sleep(name, startDate, endDate) {sleepAnalysis{startDate endDate status} }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            }
-                        },
-                        "forms": [
-                            {
-                                "htv:methodName": "GET",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "href": "http://localhost:4000/graphql?query={ sleep(name, startDate, endDate)  {name user   address    room   location stepCount{startDate endDate stepCount} heartRate{startDate endDate heartRate} exerciseTime{startDate endDate exerciseTime} standHour{startDate endDate standHour}}}",
-                                "contentType": "application/json",
-                                "op": [
-                                    "readallproperties"
-                                ],
-                                "secure": "nosec_sc"
-                            }
-                        ],
-                        "securityDefinitions": {
-                            "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
-                            }
-                        },
-                        "security": [
-                            "nosec_sc"
-                        ],
-                        "version": {
-                            "instance": "0.0.1"
-                        }
-                    },
-                    "smartTable": {
-                        "id": "https://.../td/SmartTable",
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "SmartTable"
-                        ],
-                        "name": "SmartTable Sensor",
-                        "names": "",
-                        "description": "음식 리스트, 음식 칼로리, 사진 로깅",
+                        "description": "A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it.",
                         "properties": {
                             "name": {
                                 "@type": "name",
@@ -1443,30 +563,11 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "schema:Text",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable {user }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1481,11 +582,11 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable { address }}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1500,11 +601,11 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable { room }}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1519,11 +620,11 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable { location }}",
+                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1531,18 +632,18 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "time": {
-                                "@type": "time",
-                                "type": "string",
-                                "title": "Time",
-                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
+                            "x": {
+                                "@type": "temp",
+                                "type": "integer",
+                                "title": "X",
+                                "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable { time }}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1550,18 +651,18 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "foodList": {
-                                "@type": "foodList",
-                                "type": "array",
-                                "title": "FoodList",
-                                "description": "List of food items",
+                            "y": {
+                                "@type": "z",
+                                "type": "integer",
+                                "title": "Y",
+                                "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable { foodList }}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1569,37 +670,18 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "caloryList": {
-                                "@type": "caloryList",
-                                "type": "array",
-                                "title": "CaloryList",
-                                "description": "List of calories for the food items",
+                            "z": {
+                                "@type": "z",
+                                "type": "integer",
+                                "title": "Z",
+                                "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable { caloryList }}",
+                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "contentType": "application/json",
                                         "op": [
                                             "readproperty"
                                         ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "snapShot": {
-                                "@type": "snapShot",
-                                "type": "string",
-                                "title": "SnapShot",
-                                "description": "url of the snap shot of the table",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:3000/graphql?query={ smartTable {snapShot}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
                                         "secure": "nosec_sc"
                                     }
                                 ],
@@ -1610,7 +692,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ smartTable {name user   address    room   location    time    foodList   caloryList snapShot }}",
+                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -1620,343 +702,8 @@ const actions = {
                         ],
                         "securityDefinitions": {
                             "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
-                            }
-                        },
-                        "security": [
-                            "nosec_sc"
-                        ],
-                        "version": {
-                            "instance": "0.0.1"
-                        }
-                    },
-                    "smartWatch": {
-                        "id": "https://.../td/SmartWatch",
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "SmartWatch"
-                        ],
-                        "name": "SmartWatch Sensor",
-                        "names": "",
-                        "description": "걸음 수, 심박, 운동시간, 일어서 있는 시간 로깅 ex)Fitbit, AppleWatch",
-                        "properties": {
-                            "name": {
-                                "@type": "name",
-                                "type": "string",
-                                "title": "Name",
-                                "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name) {name}}",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "user": {
-                                "@type": "user",
-                                "type": "string",
-                                "title": "User",
-                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name) {user}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "address": {
-                                "@type": "address",
-                                "type": "string",
-                                "title": "Address",
-                                "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name) { address }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "room": {
-                                "type": "room",
-                                "@type": "schema:Text",
-                                "title": "Room",
-                                "description": "room number of the building where the sensor resides - ex) L8321",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name) {room }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "location": {
-                                "@type": "location",
-                                "type": "string",
-                                "title": "Location",
-                                "description": "location of the sensor - format: free",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name) { location }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "stepCount": {
-                                "@type": "stepCount",
-                                "type": "array",
-                                "items": {
-                                    "startDate": "string",
-                                    "endDate": "string",
-                                    "stepCount": "integer"
-                                },
-                                "title": "Step Count",
-                                "description": "걸음 수",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name, startDate, endDate) {stepCount{startDate endDate stepCount}}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "heartRate": {
-                                "@type": "heartRate",
-                                "type": "array",
-                                "items": {
-                                    "startDate": "string",
-                                    "endDate": "string",
-                                    "heartRate": "integer"
-                                },
-                                "title": "Heart Rate",
-                                "description": "심박수 - unit: count/min",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name:, startDate, endDate) { heartRate {startDate endDate heartRate}}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "exerciseTime": {
-                                "@type": "exerciseTime",
-                                "type": "array",
-                                "items": {
-                                    "startDate": "string",
-                                    "endDate": "string",
-                                    "exerciseTime": "integer"
-                                },
-                                "title": "Exercise Time",
-                                "description": "운동시간 - unit: minute",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name, startDate, endDate) { exerciseTime{startDate endDate exerciseTime} }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "standHour": {
-                                "@type": "standHour",
-                                "type": "array",
-                                "items": {
-                                    "startDate": "string",
-                                    "endDate": "string",
-                                    "standHour": "number"
-                                },
-                                "title": "Stand Hour",
-                                "description": "일어선 시간 - 1: 1시간, 0: 0시간",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "forms": [
-                                    {
-                                        "htv:methodName": "GET",
-                                        "href": "http://localhost:3000/graphql?query={ smartWatch(name, startDate, endDate) { standHour{startDate endDate standHour} }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            }
-                        },
-                        "forms": [
-                            {
-                                "htv:methodName": "GET",
-                                "uriVariables": {
-                                    "name": {
-                                        "type": "string",
-                                        "@type": "name"
-                                    },
-                                    "startDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    },
-                                    "endDate": {
-                                        "type": "string",
-                                        "@type": "time"
-                                    }
-                                },
-                                "href": "http://localhost:4000/graphql?query={ smartWatch(name, startDate, endDate)  {name user   address    room   location stepCount{startDate endDate stepCount} heartRate{startDate endDate heartRate} exerciseTime{startDate endDate exerciseTime} standHour{startDate endDate standHour}}}",
-                                "contentType": "application/json",
-                                "op": [
-                                    "readallproperties"
-                                ],
-                                "secure": "nosec_sc"
-                            }
-                        ],
-                        "securityDefinitions": {
-                            "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
+                                "scheme": "nosec",
+                                "description": "no security"
                             }
                         },
                         "security": [
