@@ -136,14 +136,6 @@ const actions = {
                                     "readallproperties"
                                 ],
                                 "secure": "nosec_sc"
-                            },
-                            {
-                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
-                                "contentType": "application/json",
-                                "op": [
-                                    "readallproperties"
-                                ],
-                                "secure": "nosec_sc"
                             }
                         ],
                         "securityDefinitions": {
@@ -164,7 +156,7 @@ const actions = {
                         "@type": [
                             "led"
                         ],
-                        "id": "https://.../td/AirQuality",
+                        "id": "https://.../td/led",
                         "name": "Led Sensor",
                         "names": "",
                         "description": "A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it.",
@@ -176,7 +168,7 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {name}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -195,7 +187,7 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {address}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -214,7 +206,7 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {room}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -233,7 +225,7 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "href": "http://localhost:3000/graphql?query={ led {location}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -305,7 +297,7 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ motion {name}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -324,7 +316,7 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "href": "http://localhost:3000/graphql?query={ motion {address}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -343,7 +335,7 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "href": "http://localhost:3000/graphql?query={ motion {room}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -362,7 +354,7 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "href": "http://localhost:3000/graphql?query={ motion {location}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -381,7 +373,7 @@ const actions = {
                                 "description": "Current state of motion sensor, true - motion detected. false - motion undetected",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "href": "http://localhost:3000/graphql?query={ motion { state }}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -396,7 +388,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
+                                "href": "http://localhost:3000/graphql?query={ motion {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -434,7 +426,7 @@ const actions = {
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {name}}",
+                                        "href": "http://localhost:3000/graphql?query={ light {name}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -453,7 +445,7 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "href": "http://localhost:3000/graphql?query={ light {address}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -472,7 +464,7 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "href": "http://localhost:3000/graphql?query={ light {room}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -491,7 +483,7 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "href": "http://localhost:3000/graphql?query={ light {location}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -510,7 +502,7 @@ const actions = {
                                 "description": "Current state of Light sensor, true -light. false - dark",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "href": "http://localhost:3000/graphql?query={ light { state }}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -525,7 +517,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
+                                "href": "http://localhost:3000/graphql?query={ light {name  address    room   location state  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -582,7 +574,7 @@ const actions = {
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {address}}",
+                                        "href": "http://localhost:3000/graphql?query={ gyroscope {address}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -601,7 +593,7 @@ const actions = {
                                 "description": "room number of the building where the sensor resides - ex) L8321",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {room}}",
+                                        "href": "http://localhost:3000/graphql?query={ gyroscope {room}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -620,7 +612,7 @@ const actions = {
                                 "description": "location of the sensor - format: free",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ airQuality {location}}",
+                                        "href": "http://localhost:3000/graphql?query={ gyroscope {location}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -639,7 +631,7 @@ const actions = {
                                 "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "href": "http://localhost:3000/graphql?query={ gyroscope {x}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -652,13 +644,13 @@ const actions = {
                                 "writeOnly": false
                             },
                             "y": {
-                                "@type": "z",
+                                "@type": "y",
                                 "type": "integer",
                                 "title": "Y",
                                 "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "href": "http://localhost:3000/graphql?query={ gyroscope {y}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -677,7 +669,7 @@ const actions = {
                                 "description": "Current state of LED, true - turn on. false - turn off",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:3000/graphql?query={ led {state}}",
+                                        "href": "http://localhost:3000/graphql?query={ gyroscope {z}}",
                                         "contentType": "application/json",
                                         "op": [
                                             "readproperty"
@@ -692,7 +684,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:3000/graphql?query={ led {name  address    room   location state  }}",
+                                "href": "http://localhost:3000/graphql?query={ gyroscope {name  address    room   location x y z  }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
