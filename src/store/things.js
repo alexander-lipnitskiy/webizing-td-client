@@ -290,7 +290,7 @@ const actions = {
                         "@type": [
                             "Cushion"
                         ],
-                        "name": "Cushion Sensor",
+                        "name": "Smart Cushion Sensor",
                         "names": "",
                         "description": "앉아 있는지 여부를 판단",
                         "properties": {
@@ -408,52 +408,33 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-                            "pressure": {
-                                "@type": "pressure",
-                                "type": "number",
-                                "title": "Pressure",
-                                "description": "unit is to be defined",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {pressure}}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
+                            "points": {
+                                "@type": "points",
+                                "type": "array",
+                                "title": "Points",
+                                "items":{
+                                    "current": {
+                                        "@type": "number",
+                                        "type": "number"
+                                    },
+                                    "coord": {
+                                        "type": "object",
+                                        "properties": {
+                                            "x": {
+                                                "@type": "number",
+                                                "type": "number"
+                                            },
+                                            "y": {
+                                                "@type": "number",
+                                                "type": "number"
+                                            }
+                                        }
                                     }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "temp": {
-                                "@type": "temp",
-                                "type": "number",
-                                "title": "Temp",
-                                "description": "temperature - unit: Celsius(℃)",
+                                },
+                                "description": "array of each sensor on a smart cushion that represent amount of pressure",
                                 "forms": [
                                     {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {temp }}",
-                                        "op": [
-                                            "readproperty"
-                                        ],
-                                        "contentType": "application/json",
-                                        "secure": "nosec_sc"
-                                    }
-                                ],
-                                "readOnly": true,
-                                "observable": false,
-                                "writeOnly": false
-                            },
-                            "status": {
-                                "@type": "status",
-                                "type": "number",
-                                "title": "Status",
-                                "description": "pm2.5 - unit: ㎍/㎥",
-                                "forms": [
-                                    {
-                                        "href": "http://localhost:4000/graphql?query={ cushion {status }}",
+                                        "href": "http://localhost:4000/graphql?query={ cushion {points}}",
                                         "op": [
                                             "readproperty"
                                         ],
@@ -468,7 +449,7 @@ const actions = {
                         },
                         "forms": [
                             {
-                                "href": "http://localhost:4000/graphql?query={ cushion {_id _index  name user   address    room   location    time    pressure    temp   status }}",
+                                "href": "http://localhost:4000/graphql?query={ cushion {_id _index  name user   address    room   location    time points }}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
