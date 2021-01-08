@@ -1,4 +1,4 @@
-# webizing-td-client
+# Webizing Thing Description Client
 
 # Run Dockerfile for production
 
