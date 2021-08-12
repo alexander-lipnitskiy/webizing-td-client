@@ -6,11 +6,12 @@ import ThingPropertyID from './components/ThingPropertiesID';
 import ThingProperties from './components/ThingProperties';
 import HomeForElderlyMap from './components/HomeForElderlyMap';
 import IPCameraDashboard from './components/IPCameraDashboard';
+import TDConfiguration from './components/TDConfiguration';
 
 Vue.use(Router);
 
 export default new Router({
-  base: '/td',
+  base: '/',
   mode: 'history',
   routes: [
     {
@@ -42,6 +43,11 @@ export default new Router({
       path: '/:thing/properties/:name',
       name: 'thing-properties-id',
       component: ThingPropertyID
+    },
+    {
+      path: '/settings',
+      name: 'td-configuration',
+      component: TDConfiguration
     }
   ]
 })

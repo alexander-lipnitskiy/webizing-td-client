@@ -51,8 +51,7 @@ export default {
     return {
       zoom: 13,
       // center: latLng(37.5984373, 127.0454027),
-      url:
-        "https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}",
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       options: {
         id: "mapbox.streets",
         accessToken:

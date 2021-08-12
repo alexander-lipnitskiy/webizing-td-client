@@ -8,6 +8,14 @@
             </el-table>
         </div>
 
+        <h3>Events</h3>
+        <div v-bind:key="item['_id']" v-for="item in values" style="padding-bottom: 20px;">
+            <el-table :data="item" border style="width: 100%; margin-bottom: 20px;">
+                <el-table-column prop="property" label="Property"></el-table-column>
+                <el-table-column prop="procolol" label="Protocol"></el-table-column>
+                <el-table-column prop="value" width="720" label="Value"></el-table-column>
+            </el-table>
+        </div>
     </div>
 </template>
 

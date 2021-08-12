@@ -7,6 +7,7 @@
                 :center="center"
                 style="width: 100%; height: 100%; "
                 @update:zoom="zoomUpdated"
+                
             >
                 <l-image-overlay
                         :url="url"
@@ -77,7 +78,7 @@
                     center: [47.413220, -1.0482],
                     radius: 6,
                     color: 'red'
-                },
+                }, 
                 cameras: [
                     { name: 'camera1', angle: '180', lng: 128.147278, lat: -72.571782 },
                     { name: 'camera2', angle: '360', lng: 205.464249, lat: -50.743408 },

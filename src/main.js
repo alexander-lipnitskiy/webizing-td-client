@@ -10,6 +10,14 @@ import 'nprogress/nprogress.css';
 import TreeView from "vue-json-tree-view"
 Vue.use(TreeView);
 
+import VueBlobJsonCsv from 'vue-blob-json-csv';
+
+Vue.use(VueBlobJsonCsv)
+
+import VJsoneditor from 'v-jsoneditor'
+
+Vue.use(VJsoneditor)
+
 Vue.config.productionTip = false;
 
 new Vue({

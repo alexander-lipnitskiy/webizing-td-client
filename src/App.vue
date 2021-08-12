@@ -17,7 +17,12 @@
                     :collapse="isCollapse"
                     @select="handleSelect"
               >
-              <el-menu-item index="/airQuality/model">
+
+              <el-menu-item v-for="(key, index) in things" :key="index" :index="'/' + key + '/model'">
+                <router-link tag="span" v-bind:to="'/' + key + '/model'">{{$store.getters.getThings()[key].name}} </router-link> 
+              </el-menu-item>
+
+              <!-- <el-menu-item index="/airQuality/model">
                 <i class="el-icon-wind-power"></i>
                 <router-link tag="span" v-bind:to="`/airQuality/model`">Air Quality </router-link>
               </el-menu-item>
@@ -25,6 +30,10 @@
               <el-menu-item index="/cushion/model">
                 <i class="el-icon-table-lamp"></i>
                 <router-link tag="span" v-bind:to="`/cushion/model`">Cushion</router-link>
+              </el-menu-item>
+              <el-menu-item index="/matress/model">
+                <i class="el-icon-table-lamp"></i>
+                <router-link tag="span" v-bind:to="`/matress/model`">Matress</router-link>
               </el-menu-item>
               <el-menu-item index="/energyApplianceMonitor/model">
                 <i class="el-icon-monitor"></i>
@@ -53,6 +62,16 @@
               <el-menu-item index="/smartWatch/model">
                 <i class="el-icon-watch-1"></i>
                 <router-link tag="span" v-bind:to="`/smartWatch/model`">Smart Watch</router-link>
+              </el-menu-item> -->
+              <el-divider></el-divider>
+              <el-menu-item index="/settings">
+                <i class="el-icon-setting"></i>
+                <router-link tag="span" v-bind:to="`/settings`">TD Manager</router-link>
+              </el-menu-item>
+
+              <el-menu-item index="/ldap">
+                <i class="el-icon-setting"></i>
+                <router-link tag="span" v-bind:to="`/settings`">LDAP Configs</router-link>
               </el-menu-item>
             </el-menu>
           </el-aside>
@@ -94,6 +113,14 @@
       handleSelect(key, keyPath) {
         this.$router.push({ path: `${key}` })
       }
+    },
+    computed: {
+      things() {
+        const things = this.$store.getters.getThings();
+        const keys = Object.keys(things);
+
+        return keys
+      },
     }
   }
 </script>

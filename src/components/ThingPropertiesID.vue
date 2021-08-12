@@ -55,7 +55,7 @@ export default {
   name: "ThingPropertyDetails",
   data() {
     return {
-      context: "https://schema.iot.webizing.org/"
+      context: "https://schema.org/"
     };
   },
   computed: {
@@ -88,7 +88,7 @@ export default {
   },
   methods: {
     thingDescriptionPropertyURL: function() {
-      return `${this.context}${this.property["@type"]}`;
+      return `${this.context}${this.property["@type"].split(':')[1]}`;
     },
     ontologyLink: function(param) {
       return `${this.context}${param}`;

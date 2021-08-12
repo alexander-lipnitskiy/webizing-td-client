@@ -12,6 +12,9 @@ const getters = {
     },
     getPropertyDetailsOfSensor: (state) => (nameOfSensor, nameOfProperty) => {
         return state.td[nameOfSensor].properties[nameOfProperty]
+    },
+    getThings: (state) => () => {
+        return state.td
     }
 };
 
@@ -23,17 +26,20 @@ const actions = {
             await setTimeout(() => {
                 commit('addThings', {
                     "airQuality": {
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "AirQuality"
+                        "@context": [
+                          "http://iotschema.org/",
+                          {"schema": "https://schema.org/"}
                         ],
-                        "id": "https://.../td/AirQuality",
+                        "@type": [
+                            "Sensor"
+                        ],
+                        "id": "https://localhost:3000/td/AirQuality",
                         "name": "Air Quality Sensor",
                         "names": "",
                         "description": "공기질 로깅 ex)Foobot(5분 주기로 데이터를 가져옴)",
                         "properties": {
                             "name": {
-                                "@type": "name",
+                                "@type": "schema:name",
                                 "type": "string",
                                 "title": "Name",
                                 "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
@@ -52,7 +58,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "user": {
-                                "@type": "user",
+                                "@type": "schema:user",
                                 "type": "string",
                                 "title": "User",
                                 "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
@@ -71,7 +77,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "address": {
-                                "@type": "address",
+                                "@type": "schema:address",
                                 "type": "string",
                                 "title": "Address",
                                 "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
@@ -90,7 +96,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "room": {
-                                "@type": "room",
+                                "@type": "schema:room",
                                 "type": "string",
                                 "title": "Room",
                                 "description": "room number of the building where the sensor resides - ex) L8321",
@@ -109,7 +115,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "location": {
-                                "@type": "location",
+                                "@type": "schema:location",
                                 "type": "string",
                                 "title": "Location",
                                 "description": "location of the sensor - format: free",
@@ -128,7 +134,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "time": {
-                                "@type": "time",
+                                "@type": "schema:time",
                                 "type": "string",
                                 "title": "Time",
                                 "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
@@ -147,7 +153,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "humidity": {
-                                "@type": "humidity",
+                                "@type": "schema:humidity",
                                 "type": "number",
                                 "title": "Humidity",
                                 "description": "습도 - unit: %",
@@ -166,7 +172,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "temp": {
-                                "@type": "temp",
+                                "@type": "schema:temp",
                                 "type": "number",
                                 "title": "Temp",
                                 "description": "temperature - unit: Celsius(℃)",
@@ -185,7 +191,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "particle": {
-                                "@type": "particle",
+                                "@type": "schema:particle",
                                 "type": "number",
                                 "title": "Particle",
                                 "description": "pm2.5 - unit: ㎍/㎥",
@@ -204,7 +210,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "co2": {
-                                "@type": "co2",
+                                "@type": "schema:co2",
                                 "type": "number",
                                 "title": "Co2",
                                 "description": "이산화탄소 - unit: ppm",
@@ -223,7 +229,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "voc": {
-                                "@type": "voc",
+                                "@type": "schema:voc",
                                 "type": "number",
                                 "title": "Voc",
                                 "description": "휘발성 유기 화합물 - unit: ppb",
@@ -242,7 +248,7 @@ const actions = {
                                 "writeOnly": false
                             },
                             "pollution": {
-                                "@type": "pollution",
+                                "@type": "schema:pollution",
                                 "type": "number",
                                 "title": "Pollution",
                                 "description": "미세먼지 - unit: TBD",
@@ -274,25 +280,268 @@ const actions = {
                         "securityDefinitions": {
                             "nosec_sc": {
                                 "scheme": "nosec",
-                                "description": "no security"
+                                "description": "No security"
+                            },
+                            "oauth2_sc": {
+                                "description": "Protocol that allows a user to grant a third-party web site or application access to the user's protected resources",
+                                "scheme": "oauth2",
+                                "flow": "code",
+                                "scopes": ["readallproperty:air-quality-sensor", "readtopic:cushion"],
+                                "refresh": "https://dev-t9gm0jy5.eu.auth0.com/oauth/token",
+                                "token": "https://dev-t9gm0jy5.eu.auth0.com/oauth/token",
+                                "authorization": "https://dev-t9gm0jy5.eu.auth0.com/oauth/token"
                             }
                         },
                         "security": [
-                            "nosec_sc"
+                            "oauth2_sc"
                         ],
                         "version": {
                             "instance": "0.0.1"
                         }
                     },
                     "cushion": {
-                        "id": "https://.../td/Cushion",
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "Cushion"
-                        ],
-                        "name": "Smart Cushion Sensor",
+                        "@context": "https://www.w3.org/2019/wot/td/v1",
+                        "id": "https://schema.iot.webizing.org/td/cushion",
+                        "name": "Сushion",
                         "names": "",
                         "description": "앉아 있는지 여부를 판단",
+                        "title": "Сushion Sensor",
+                        "properties": {
+                            "name": {
+                                "@type": "name",
+                                "type": "string",
+                                "title": "Name",
+                                "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{name}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            },
+                            "user": {
+                                "@type": "user",
+                                "type": "string",
+                                "title": "User",
+                                "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{user}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            },
+                            "address": {
+                                "@type": "address",
+                                "type": "string",
+                                "title": "Address",
+                                "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{address}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            },
+                            "room": {
+                                "@type": "room",
+                                "type": "string",
+                                "title": "Room",
+                                "description": "room number of the building where the sensor resides - ex) L8321",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{room}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            },
+                            "location": {
+                                "@type": "location",
+                                "type": "string",
+                                "title": "Location",
+                                "description": "location of the sensor - format: free",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{location}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            },
+                            "time": {
+                                "@type": "time",
+                                "type": "string",
+                                "title": "Time",
+                                "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{time}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            },
+                            "points": {
+                                "@type": "points",
+                                "type": "array",
+                                "title": "Points",
+                                "items":{
+                                    "current": {
+                                        "@type": "PressureData",
+                                        "type": "number",
+                                        "description": "value of pressure"
+                                    },
+                                    "coord": {
+                                        "type": "object",
+                                        "properties": {
+                                            "x": {
+                                                "@type": "number",
+                                                "type": "number",
+                                                "description": "location X on a smart cushion"
+                                            },
+                                            "y": {
+                                                "@type": "number",
+                                                "type": "number",
+                                                "description": "location Y on a smart cushion"
+                                            }
+                                        }
+                                    }
+                                },
+                                "description": "array of each sensor on a smart cushion that represent amount of pressure",
+                                "forms": [
+                                    {
+                                        "href": "http://localhost:4000/graphql?query={cushion{points}}",
+                                        "op": [
+                                            "readproperty"
+                                        ],
+                                        "contentType": "application/json",
+                                        "secure": "nosec_sc"
+                                    }
+                                ],
+                                "readOnly": true,
+                                "observable": false,
+                                "writeOnly": false
+                            }
+                        },
+                        "events": {
+                            "pressure": {
+                                "description": "array of each sensor on a smart cushion that represent amount of pressure",
+                                "data": {
+                                    "type": "object",
+                                    "items" : {
+                                        "type" : "object",
+                                        "properties": {
+                                            "time": {
+                                                "type": "string"
+                                            },
+                                            "points": {
+                                                "type": "array",
+                                                "minItems": 36,
+                                                "maxItems": 36,
+                                                "items" : {
+                                                    "type" : "object",
+                                                    "properties": {
+                                                        "current": {"type": "number"},
+                                                        "coord": {"type": "object",
+                                                        "properties": {
+                                                            "x": {"type": "number"},
+                                                            "y": {"type": "number"}
+                                                        }}
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "forms": [
+                                    {
+                                        "href": "mqtt://192.168.1.130:1883/cushion/7",
+                                        "contentType" : "text/json",
+                                        "op" : "subscribeevent",
+                                        "secure": "oauth2_sc"
+                                    }
+                                ]
+                            }
+                        },
+                        "forms": [
+                            {
+                                "href": "http://localhost:3000/graphql?query={cushion{name+user+address+room+location+time+points}}",
+                                "contentType": "application/json",
+                                "op": [
+                                    "readallproperties"
+                                ],
+                                "secure": "nosec_sc"
+                            }
+                        ],
+                        "securityDefinitions": {
+                            "oauth2_sc": {
+                                "description": "Protocol that allows a user to grant a third-party web site or application access to the user's protected resources",
+                                "scheme": "oauth2",
+                                "flow": "code",
+                                "scopes": ["read:cushion-sensor"],
+                                "refresh": "https://dev-t9gm0jy5.eu.auth0.com/oauth/token",
+                                "token": "https://dev-t9gm0jy5.eu.auth0.com/oauth/token",
+                                "authorization": "https://dev-t9gm0jy5.eu.auth0.com/oauth/token"
+                            },
+                            "nosec_sc": {
+                                "scheme": "nosec",
+                                "description": "no security"
+                            }
+                        },
+                        "security": [
+                            "oauth2_sc"
+                        ],
+                        "version": {
+                            "instance": "0.0.1"
+                        }
+                    },
+                    "matress": {
+                        "@context": "https://www.w3.org/2019/wot/td/v1",
+                        "id": "https://schema.iot.webizing.org/td/cushion",
+                        "name": "Matress",
+                        "names": "",
+                        "description": "Matress",
+                        "title": "Matress",
                         "properties": {
                             "name": {
                                 "@type": "name",
@@ -414,19 +663,22 @@ const actions = {
                                 "title": "Points",
                                 "items":{
                                     "current": {
-                                        "@type": "number",
-                                        "type": "number"
+                                        "@type": "PressureData",
+                                        "type": "number",
+                                        "description": "value of pressure"
                                     },
                                     "coord": {
                                         "type": "object",
                                         "properties": {
                                             "x": {
                                                 "@type": "number",
-                                                "type": "number"
+                                                "type": "number",
+                                                "description": "location X on a smart cushion"
                                             },
                                             "y": {
                                                 "@type": "number",
-                                                "type": "number"
+                                                "type": "number",
+                                                "description": "location Y on a smart cushion"
                                             }
                                         }
                                     }
@@ -447,9 +699,48 @@ const actions = {
                                 "writeOnly": false
                             }
                         },
+                        "events": {
+                            "pressure": {
+                                "description": "array of each sensor on a matress that represent amount of pressure",
+                                "data": {
+                                    "type": "object",
+                                    "items" : {
+                                        "type" : "object",
+                                        "properties": {
+                                            "time": {
+                                                "type": "string"
+                                            },
+                                            "points": {
+                                                "type": "array",
+                                                "minItems": 435,
+                                                "maxItems": 435,
+                                                "items" : {
+                                                    "type" : "object",
+                                                    "properties": {
+                                                        "current": {"type": "number"},
+                                                        "coord": {"type": "object",
+                                                        "properties": {
+                                                            "x": {"type": "number"},
+                                                            "y": {"type": "number"}
+                                                        }}
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                },
+                                "forms": [
+                                    {
+                                        "href": "mqtt://192.168.1.130:1883/cushion/7",
+                                        "contentType" : "text/json",
+                                        "op" : "subscribeevent"
+                                    }
+                                ]
+                            }
+                        },
                         "forms": [
                             {
-                                "href": "http://localhost:4000/graphql?query={ cushion {_id _index  name user   address    room   location    time points }}",
+                                "href": "http://localhost:3000/graphql?query={ cushion {name user address room location time points}}",
                                 "contentType": "application/json",
                                 "op": [
                                     "readallproperties"
@@ -459,8 +750,8 @@ const actions = {
                         ],
                         "securityDefinitions": {
                             "nosec_sc": {
-                                "description": "no security",
-                                "scheme": "nosec"
+                                "scheme": "nosec",
+                                "description": "no security"
                             }
                         },
                         "security": [
@@ -470,6 +761,198 @@ const actions = {
                             "instance": "0.0.1"
                         }
                     },
+                    // "cushion": {
+                    //     "id": "https://localhost:3000/td/Cushion",
+                    //     "@context": [
+                    //         "http://iotschema.org/",
+                    //         {"schema": "https://schema.org/"}
+                    //       ],
+                    //       "@type": [
+                    //           "Sensor"
+                    //       ],
+                    //     "name": "Smart Cushion Sensor",
+                    //     "names": "",
+                    //     "description": "앉아 있는지 여부를 판단",
+                    //     "properties": {
+                    //         "name": {
+                    //             "@type": "name",
+                    //             "type": "string",
+                    //             "title": "Name",
+                    //             "description": "name of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {name}}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         },
+                    //         "user": {
+                    //             "@type": "user",
+                    //             "type": "string",
+                    //             "title": "User",
+                    //             "description": "user of the sensor - format: firstName+LastName ex)jonghoLee, wanhoIm",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {user}}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         },
+                    //         "address": {
+                    //             "@type": "address",
+                    //             "type": "string",
+                    //             "title": "Address",
+                    //             "description": "building where the sensor resides - format: organization-building ex)yongjaelee-house, kist-l1, kist-l8",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {address}}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         },
+                    //         "room": {
+                    //             "@type": "room",
+                    //             "type": "string",
+                    //             "title": "Room",
+                    //             "description": "room number of the building where the sensor resides - ex) L8321",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {room}}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         },
+                    //         "location": {
+                    //             "@type": "location",
+                    //             "type": "string",
+                    //             "title": "Location",
+                    //             "description": "location of the sensor - format: free",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {location }}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         },
+                    //         "time": {
+                    //             "@type": "time",
+                    //             "type": "string",
+                    //             "title": "Time",
+                    //             "description": "time at which the data measurement was made - ex)\"2017-05-30T18:54:20+09:00\"",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {time}}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         },
+                    //         "points": {
+                    //             "@type": "points",
+                    //             "type": "array",
+                    //             "title": "Points",
+                    //             "items":{
+                    //                 "current": {
+                    //                     "@type": "PressureData",
+                    //                     "type": "number",
+                    //                     "description": "value of pressure"
+                    //                 },
+                    //                 "coord": {
+                    //                     "type": "object",
+                    //                     "properties": {
+                    //                         "x": {
+                    //                             "@type": "number",
+                    //                             "type": "number",
+                    //                             "description": "location X on a smart cushion"
+                    //                         },
+                    //                         "y": {
+                    //                             "@type": "number",
+                    //                             "type": "number",
+                    //                             "description": "location Y on a smart cushion"
+                    //                         }
+                    //                     }
+                    //                 }
+                    //             },
+                    //             "description": "array of each sensor on a smart cushion that represent amount of pressure",
+                    //             "forms": [
+                    //                 {
+                    //                     "href": "http://localhost:4000/graphql?query={ cushion {points}}",
+                    //                     "op": [
+                    //                         "readproperty"
+                    //                     ],
+                    //                     "contentType": "application/json",
+                    //                     "secure": "nosec_sc"
+                    //                 }
+                    //             ],
+                    //             "readOnly": true,
+                    //             "observable": false,
+                    //             "writeOnly": false
+                    //         }
+                    //     },
+                    //     "forms": [
+                    //         {
+                    //             "href": "http://localhost:3000/graphql?query={ energyApplianceMonitor {name user address room location time applianceId activePower}}",
+                    //             "contentType": "application/json",
+                    //             "op": [
+                    //                 "readallproperties"
+                    //             ],
+                    //             "secure": "nosec_sc"
+                    //         }
+                    //     ],
+                    //     "securityDefinitions": {
+                    //         "nosec_sc": {
+                    //             "description": "no security",
+                    //             "scheme": "nosec"
+                    //         }
+                    //     },
+                    //     "security": [
+                    //         "nosec_sc"
+                    //     ],
+                    //     "version": {
+                    //         "instance": "0.0.1"
+                    //     }
+                    // },
                     "energyApplianceMonitor": {
                         "id": "https://.../td/Cushion",
                         "@context": "https://schema.iot.webizing.org/",
@@ -1980,6 +2463,9 @@ const actions = {
 const mutations = {
     addThings(state, payload) {
         state.td = payload
+    },
+    addThing(state, payload) {
+        state.td = {...state.td, ...payload}
     },
     startLoading(state) {
         state.loading = true;
