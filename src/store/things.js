@@ -25,7 +25,6 @@ const actions = {
             NProgress.start();
             await setTimeout(() => {
                 commit('addThings', {
-<<<<<<< HEAD
                     "airQuality": {
                         "@context": [
                           "http://iotschema.org/",
@@ -36,15 +35,6 @@ const actions = {
                         ],
                         "id": "https://localhost:3000/td/AirQuality",
                         "name": "Air Quality Sensor",
-=======
-                    "raspberry-pi": {
-                        "@context": "https://schema.iot.webizing.org/",
-                        "@type": [
-                            "raspberry-pi"
-                        ],
-                        "id": "https://.../td/AirQuality",
-                        "name": "Raspberry Pi",
->>>>>>> a84ce456ccf8eaec8307009b3d891d73aca8fcac
                         "names": "",
                         "description": "A light-emitting diode (LED) is a semiconductor light source that emits light when current flows through it.",
                         "properties": {
@@ -2068,7 +2058,7 @@ const actions = {
                     console.log(key)
                     output[Object.keys(key)[1]] = key[Object.keys(key)[1]];
                 }
-                
+
                 commit('addThings', output);
                 commit('finishLoading');
                 NProgress.done()
