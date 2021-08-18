@@ -20,6 +20,16 @@ export default new Router({
       redirect: '/airQuality/model'
     },
     {
+      path: '/rapberry-pi/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
+    },
+    {
+      path: '/orbitdb-dashboard',
+      name: 'orbitdb-dash',
+      component: OrbitdbDash
+    },
+    {
       path: '/dashboard',
       name: 'thing-properties-dashboard',
       component: HomeForElderlyMap

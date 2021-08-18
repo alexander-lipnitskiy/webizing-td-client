@@ -6,13 +6,14 @@
           <div class="header">
             <span style="font-size:24px; color: #67C23A;">Webizing Web Thing Model</span>
           </div>
+          
         <div class="divider"></div>
 
         </el-header>
         <el-container>
           <el-aside style="width: auto; padding-top: 1px;">
               <el-menu
-                    default-active="/airQuality/model"
+                    default-active="/led/model"
                     class="el-menu-vertical-demo"
                     :collapse="isCollapse"
                     @select="handleSelect"
@@ -43,21 +44,21 @@
                 <i class="el-icon-monitor"></i>
                 <router-link tag="span" v-bind:to="`/energyMonitor/model`">Energy Monitor</router-link>
               </el-menu-item>
-              <el-menu-item index="/ipCamera/model">
-                <i class="el-icon-video-camera"></i>
-                <router-link class="development" tag="span" v-bind:to="`/ipCamera/model`">IPCamera</router-link>
+
+              <el-menu-item index="/raspberry-pi/model">
+                <router-link tag="span" v-bind:to="`/raspberry-pi/model`">Raspberry Pi</router-link>
               </el-menu-item>
-              <el-menu-item index="/ipfsCamera/model">
-                <i class="el-icon-video-camera-solid"></i>
-                <router-link class="development" tag="span" v-bind:to="`/ipfsCamera/model`">IPFSCamera</router-link>
+
+              <el-menu-item index="/led/model">
+                <router-link tag="span" v-bind:to="`/led/model`">Led</router-link>
               </el-menu-item>
-              <el-menu-item index="/sleep/model">
-                <i class="el-icon-moon"></i>
-                <router-link tag="span" v-bind:to="`/sleep/model`">Sleep Monitoring</router-link>
+
+              <el-menu-item index="/motion/model">
+                <router-link tag="span" v-bind:to="`/motion/model`">Motion</router-link>
               </el-menu-item>
-              <el-menu-item  index="/smartTable/model">
-                <i class="el-icon-knife-fork"></i>
-                <router-link class="development" tag="span" v-bind:to="`/smartTable/model`">Smart Table</router-link>
+
+              <el-menu-item index="/light/model">
+                <router-link tag="span" v-bind:to="`/light/model`">Light sensor</router-link>
               </el-menu-item>
               <el-menu-item index="/smartWatch/model">
                 <i class="el-icon-watch-1"></i>
@@ -73,15 +74,12 @@
                 <i class="el-icon-setting"></i>
                 <router-link tag="span" v-bind:to="`/settings`">LDAP Configs</router-link>
               </el-menu-item>
-            </el-menu>
+              </el-menu>
           </el-aside>
           <el-main style=" padding-left: 3em; padding-top: 4em;">
-
             <transition name="fade" mode="out-in">
                 <router-view/>
             </transition>
-
-
           </el-main>
         </el-container>
       </el-container>
