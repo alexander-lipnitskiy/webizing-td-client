@@ -1035,7 +1035,6 @@ export default {
         const tds = this.$store.getters.getThings()
 
         for (const key of Object.keys(tds)) {
-            
             things.push({value: key, label: key}) 
         }
 
@@ -1162,8 +1161,24 @@ for (const key of Object.keys(form.properties)) {
       const obj2 = this.mapperTDfromForm;
       const o = {};
       o[pr] = obj2;
-      this.$store.commit("addThing", o);
-      console.log(o);
+      
+    fetch('http://localhost:4000/td-manager/td', {
+  method: 'POST', // or 'PUT'
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({data: o}),
+})
+.then(response => response.json())
+.then(data => {
+    this.$store.dispatch('fetchThings');
+    this.$router.push({ path: `/` })
+  console.log('Success:', data);
+})
+.catch((error) => {
+  console.error('Error:', error);
+});
+        
     },
     removeProperty(item) {
       var index = this.form.properties.indexOf(item);

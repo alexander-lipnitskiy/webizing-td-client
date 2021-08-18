@@ -2443,7 +2443,7 @@ const actions = {
         if(Object.keys(state.td).length === 0 && state.td.constructor === Object){
             commit('startLoading');
             NProgress.start()
-            const response = await fetch(`http://localhost:4000/td`, {
+            const response = await fetch(`http://localhost:4000/td-manager/td`, {
                     headers: { Accept: "application/json",  "Content-Type":"application/json"},
                 }
             );
@@ -2452,7 +2452,14 @@ const actions = {
                 commit('showError', response.statusText);
             } else {
                 const res = await response.json();
-                commit('addThings', res);
+                
+                const output = {};
+                for (const key of res) {
+                    console.log(key)
+                    output[Object.keys(key)[1]] = key[Object.keys(key)[1]];
+                }
+                
+                commit('addThings', output);
                 commit('finishLoading');
                 NProgress.done()
             }

@@ -99,7 +99,7 @@
 
     },
     created() {
-      this.$store.dispatch('fetchMockupThings');
+      this.$store.dispatch('fetchThings');
     },
     data() {
       return {
