@@ -57,7 +57,6 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-<<<<<<< HEAD
                             "user": {
                                 "@type": "schema:user",
                                 "type": "string",
@@ -1374,8 +1373,6 @@ const actions = {
                                 "observable": false,
                                 "writeOnly": false
                             },
-=======
->>>>>>> a84ce456ccf8eaec8307009b3d891d73aca8fcac
                             "address": {
                                 "@type": "address",
                                 "type": "string",
@@ -2034,16 +2031,13 @@ const actions = {
                 NProgress.done();
                 commit('finishLoading');
             }, 1000);
-
-
-
         // }
     },
     async fetchThings({commit, state}) {
         if(Object.keys(state.td).length === 0 && state.td.constructor === Object){
             commit('startLoading');
             NProgress.start()
-            const response = await fetch(`http://localhost:4000/td-manager/td`, {
+            const response = await fetch(`http://localhost:4000/thing/td`, {
                     headers: { Accept: "application/json",  "Content-Type":"application/json"},
                 }
             );

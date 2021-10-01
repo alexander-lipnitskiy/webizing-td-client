@@ -3,7 +3,7 @@
 
     <div style="display: flex; width: 100%; justify-content: flex-end;">
       <span style="font-size: 20px; margin-right: auto;">
-        {{ model.name }}
+        {{ model ? model.name : null }}
       </span>
 
       <el-button-group>
@@ -53,7 +53,7 @@
       <el-table :data="getPropertiesArray()" border style="width: 100%">
         <el-table-column width="180" label="Property">
           <template slot-scope="scope">
-            <router-link class="el-link el-link--primary is-underline" v-bind:to="`properties/${scope.row.property}`" style="font-size: 16px">{{ scope.row.property }}</router-link>
+            <router-link class="el-link el-link--primary is-underline" v-bind:to="`${thingName}/properties/${scope.row.property}`" style="font-size: 16px">{{ scope.row.property }}</router-link>
           </template>
         </el-table-column>
         <el-table-column prop="type" label="Type"> </el-table-column>
@@ -115,6 +115,10 @@ export default {
     this.fetchLocationData();
   },
   computed: {
+    thingName() {
+      return this.$route.params.thing
+    },
+
     model () {
       return this.$store.getters.getSensorByName(this.$route.params.thing)
     },

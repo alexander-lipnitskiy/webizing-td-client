@@ -7,6 +7,7 @@ import ThingProperties from './components/ThingProperties';
 import HomeForElderlyMap from './components/HomeForElderlyMap';
 import IPCameraDashboard from './components/IPCameraDashboard';
 import TDConfiguration from './components/TDConfiguration';
+// import Dashboard from './components/Dashboard';
 
 Vue.use(Router);
 
@@ -17,40 +18,40 @@ export default new Router({
     {
       path: '/',
       name: 'index',
-      redirect: '/airQuality/model'
+      redirect: '/thing/airQuality'
     },
+    // {
+    //   path: '/rapberry-pi/dashboard',
+    //   name: 'Dashboard',
+    //   component: Dashboard
+    // },
+    // {
+    //   path: '/orbitdb-dashboard',
+    //   name: 'orbitdb-dash',
+    //   component: OrbitdbDash
+    // },
     {
-      path: '/rapberry-pi/dashboard',
-      name: 'Dashboard',
-      component: Dashboard
-    },
-    {
-      path: '/orbitdb-dashboard',
-      name: 'orbitdb-dash',
-      component: OrbitdbDash
-    },
-    {
-      path: '/dashboard',
+      path: '/thing/dashboard',
       name: 'thing-properties-dashboard',
       component: HomeForElderlyMap
     },
     {
-      path: '/ipCamera/dashboard',
+      path: '/thing/ipCamera/dashboard',
       name: 'ipCamera-dashboard',
       component: IPCameraDashboard
     },
     {
-      path: '/:thing/model',
+      path: '/thing/:thing',
       name: 'thing-model',
       component: ThingDetails
     },
     {
-      path: '/:thing/properties',
+      path: '/thing/:thing/properties',
       name: 'thing-properties',
       component: ThingProperties
     },
     {
-      path: '/:thing/properties/:name',
+      path: '/thing/:thing/properties/:name',
       name: 'thing-properties-id',
       component: ThingPropertyID
     },

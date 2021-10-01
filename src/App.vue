@@ -19,8 +19,8 @@
                     @select="handleSelect"
               >
 
-              <el-menu-item v-for="(key, index) in things" :key="index" :index="'/' + key + '/model'">
-                <router-link tag="span" v-bind:to="'/' + key + '/model'">{{$store.getters.getThings()[key].name}} </router-link> 
+              <el-menu-item v-for="(key, index) in things" :key="index" :index="'/thing/' + key">
+                <router-link tag="span" v-bind:to="'/thing/' + key">{{$store.getters.getThings()[key].name}} </router-link> 
               </el-menu-item>
 
               <!-- <el-menu-item index="/airQuality/model">
@@ -69,12 +69,7 @@
                 <i class="el-icon-setting"></i>
                 <router-link tag="span" v-bind:to="`/settings`">TD Manager</router-link>
               </el-menu-item>
-
-              <el-menu-item index="/ldap">
-                <i class="el-icon-setting"></i>
-                <router-link tag="span" v-bind:to="`/settings`">LDAP Configs</router-link>
-              </el-menu-item>
-              </el-menu>
+              </el-menu> 
           </el-aside>
           <el-main style=" padding-left: 3em; padding-top: 4em;">
             <transition name="fade" mode="out-in">

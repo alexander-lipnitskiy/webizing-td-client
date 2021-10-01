@@ -104,7 +104,7 @@
             async fetchLocationData() {
                 this.loading = true;
 
-                const response = await fetch(`http://localhost:4000/graphql`, {
+                const response = await fetch(`http://192.241.213.72:4000/graphql`, {
                         method: "POST",
                         headers: { Accept: "application/json",  "Content-Type":"application/json"},
                         body: JSON.stringify({ query: `{ ipCamera { name address room location }}`})

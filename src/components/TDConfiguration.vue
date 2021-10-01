@@ -27,7 +27,7 @@
       :open-delay="1000"
       class="item"
       effect="dark"
-      content="ex. Apple Watch, Air Quiality etc.."
+      content="ex. Apple Watch, Air Quiality etc.. (don't use spaces in name field)"
       placement="top-start"
     >
       <el-form-item label="Unique URL name">
@@ -957,7 +957,6 @@ export default {
         properties: [],
         actions: [],
         events: [],
-        forms: [],
         description: "",
         descriptions: [{}],
         base: "",
@@ -1161,24 +1160,24 @@ for (const key of Object.keys(form.properties)) {
       const obj2 = this.mapperTDfromForm;
       const o = {};
       o[pr] = obj2;
-      
-    fetch('http://localhost:4000/td-manager/td', {
-  method: 'POST', // or 'PUT'
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({data: o}),
-})
-.then(response => response.json())
-.then(data => {
-    this.$store.dispatch('fetchThings');
-    this.$router.push({ path: `/` })
-  console.log('Success:', data);
-})
-.catch((error) => {
-  console.error('Error:', error);
-});
-        
+      o.name = obj2.name;
+      console.log(o)
+    fetch('http://localhost:4000/thing/td', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({data: o}),
+    })
+    .then(response => response.json())
+    .then(data => {
+        this.$store.dispatch('fetchThings');
+        this.$router.push({ path: `/` })
+      console.log('Success:', data);
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
     },
     removeProperty(item) {
       var index = this.form.properties.indexOf(item);
