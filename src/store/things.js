@@ -1,4 +1,5 @@
 import NProgress from 'nprogress/nprogress';
+import config from "../config"
 
 const state = {
     td: {},
@@ -2037,7 +2038,7 @@ const actions = {
         if(Object.keys(state.td).length === 0 && state.td.constructor === Object){
             commit('startLoading');
             NProgress.start()
-            const response = await fetch(`http://localhost:4000/thing/td`, {
+            const response = await fetch(`http://${config.server.host}:${config.server.port}/thing/td`, {
                     headers: { Accept: "application/json",  "Content-Type":"application/json"},
                 }
             );

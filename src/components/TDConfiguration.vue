@@ -939,6 +939,7 @@
 
 <script>
 import VJsoneditor from "v-jsoneditor";
+import config from "../config"
 
 export default {
   name: "TDConfiguration",
@@ -1162,7 +1163,7 @@ for (const key of Object.keys(form.properties)) {
       o[pr] = obj2;
       o.name = obj2.name;
       console.log(o)
-    fetch('http://localhost:4000/thing/td', {
+    fetch(`http://${config.server.host}:${config.server.port}/thing/td`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',

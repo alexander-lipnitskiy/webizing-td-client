@@ -3,6 +3,8 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm install
 ENV NODE_ENV='production'
+ENV TD_SERVER_HOST_ENV='192.168.0.248'
+ENV TD_SERVER_PORT_ENV='4000'
 COPY ./ .
 RUN npm run build
 WORKDIR /app/dist
